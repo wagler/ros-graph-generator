@@ -1,0 +1,38 @@
+syntax = "proto3";
+package ros_graph;
+
+message Topic
+{
+	string name = 1;
+}
+
+message Timer
+{
+	string name = 1;
+	uint32 frequency_hz = 2;
+	uint32 exec_time_us = 3;
+	repeated string publishes_to = 4;
+}
+
+message Callback
+{
+	string name = 1;
+	uint32 exec_time_us = 2;
+	repeated string publishes_to = 3;
+}
+ 
+message Subscription
+{
+	string callback = 1;
+	string topic = 2;
+	uint32 latency_us = 3;
+}
+
+message ROSGraph
+{
+	string name = 1;
+	repeated Topic topics = 2;
+	repeated Timer timers = 3;
+	repeated Callback callbacks = 4;
+	repeated Subscription subscriptions = 5;
+}

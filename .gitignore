@@ -1,0 +1,8 @@
+# Ignore the .vscode directory
+.vscode/
+
+# Other common ignores
+*.log
+*.tmp
+*.swp
+

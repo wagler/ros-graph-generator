@@ -1,0 +1,42 @@
+name: "test_graph"
+
+topics: [
+	{
+		name: "/sample/release"
+	},
+	{
+		name: "/sample/secondary"
+	}
+]
+
+timers: [
+	{
+		name: "timer1"
+		frequency_hz: 1000
+		publishes_to: [ 
+			{ 
+				topic: "/sample/release"
+			} 
+		]
+	}
+]
+
+callbacks: [
+	{
+		name: "cb1"
+		exec_time_us: 100
+		publishes_to: [
+			{
+				topic: "/sample/secondary"
+			}
+		]
+	}
+]
+
+subscriptions: [
+	{
+		callback: "cb1"
+		topic: "/sample/release"
+		latency_us: 0
+	}
+]
