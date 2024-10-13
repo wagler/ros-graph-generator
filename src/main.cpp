@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <Graph.hpp>
+#include "rclcpp/rclcpp.hpp"
 
 int main(int argc, char **argv)
 {
@@ -12,8 +13,9 @@ int main(int argc, char **argv)
 
     // Get the file path from command line arguments
     std::string filePath = argv[1];
-
-    Graph rosGraph(filePath);
+    rclcpp::init(argc, argv);
+    rclcpp::spin(std::make_shared<Graph>(filePath));
+    rclcpp::shutdown();
 
     return 0;
 }

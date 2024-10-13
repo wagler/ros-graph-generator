@@ -2,41 +2,91 @@ name: "test_graph"
 
 topics: [
 	{
-		name: "/sample/release"
+		name: "/sample/uss_data"
 	},
 	{
-		name: "/sample/secondary"
+		name: "/sample/camera_data"
+	},
+	{
+		name: "/sample/uss_downstream"
+	},
+	{
+		name: "/sample/lane_downstream"
+	},
+	{
+		name: "/sample/ped_downstream"
 	}
+
 ]
 
 timers: [
 	{
-		name: "timer1"
-		frequency_hz: 1000
+		name: "uss"
+		frequency_hz: 100
+		exec_time_us: 0
 		publishes_to: [ 
-			{ 
-				topic: "/sample/release"
-			} 
+			"/sample/uss_data" 
+		]
+	},
+	{
+		name: "camera"
+		frequency_hz: 33
+		exec_time_us: 0
+		publishes_to: [ 
+			"/sample/camera_data" 
 		]
 	}
 ]
 
 callbacks: [
 	{
-		name: "cb1"
+		name: "ped_detector"
+		exec_time_us: 300
+		publishes_to: [
+			"/sample/ped_downstream"
+		]
+	},
+	{
+		name: "lane_detector"
 		exec_time_us: 100
 		publishes_to: [
-			{
-				topic: "/sample/secondary"
-			}
+			"/sample/lane_downstream"
+		]
+	},
+	{
+		name: "uss_obj_detector"
+		exec_time_us: 20
+		publishes_to: [
+			"/sample/uss_downstream"
+		]
+	},
+	{
+		name: "ped_pose_classifier"
+		exec_time_us: 20
+		publishes_to: [
 		]
 	}
 ]
 
 subscriptions: [
 	{
-		callback: "cb1"
-		topic: "/sample/release"
+		callback: "ped_detector"
+		topic: "/sample/camera_data"
+		latency_us: 0
+	},
+	{
+		callback: "lane_detector"
+		topic: "/sample/camera_data"
+		latency_us: 0
+	},
+	{
+		callback: "uss_obj_detector"
+		topic: "/sample/uss_data"
+		latency_us: 0
+	},
+	{
+		callback: "ped_pose_classifier"
+		topic: "/sample/ped_downstream"
 		latency_us: 0
 	}
 ]

@@ -27,8 +27,11 @@ include_directories(
 
 # Get the source files
 file(GLOB_RECURSE SOURCE_FILES
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp" 
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc" 
+
 )
+message(${SOURCE_FILES})
 
 add_executable(ros_graph_generator ${SOURCE_FILES})
 ament_target_dependencies(ros_graph_generator rclcpp std_msgs Protobuf)

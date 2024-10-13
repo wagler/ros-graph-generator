@@ -13,7 +13,7 @@
 #include "std_msgs/msg/string.hpp"
 
 // Protobuf includes
-#include "gen/graph.pb.h"
+#include "graph.pb.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 
