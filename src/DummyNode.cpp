@@ -245,8 +245,10 @@ void DummyNode::execCallback(const std::string name, const DummyNode::Callback c
 
     for (const auto &topic : cb.publishesTo)
     {
-        auto message = std_msgs::msg::String();
-        message.data = "Hello, world! from " + name;
+        size_t messageSize = topics.at(topic);
+        std_msgs::msg::String message;
+        message.data = std::string(messageSize, 'a'); // Fill with 'a' characters
+
         RCLCPP_INFO(this->get_logger(), "%s publishing: '%s' on topic %s",
                     name.c_str(), message.data.c_str(), topic.c_str());
 
