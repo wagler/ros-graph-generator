@@ -11,11 +11,19 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    // Initialize the protobuf library
+    GOOGLE_PROTOBUF_VERIFY_VERSION;
+
     // Get the file path from command line arguments
     std::string filePath = argv[1];
+
+    // Start the ROS graph
     rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<Graph>(filePath));
+    Graph graph(filePath);
     rclcpp::shutdown();
+
+    // Cleanup protobuf
+    google::protobuf::ShutdownProtobufLibrary();
 
     return 0;
 }

@@ -1,38 +1,63 @@
 syntax = "proto3";
 package ros_graph;
 
+// Topics are just strings. They should be accessible between nodes. 
 message Topic
 {
 	string name = 1;
+	uint32 msg_size_bytes = 2;
 }
 
-message Timer
-{
-	string name = 1;
-	uint32 frequency_hz = 2;
-	uint32 exec_time_us = 3;
-	repeated string publishes_to = 4;
-}
-
+/*
+Just a regular ROS callback. Set exec_time_us to set the time in microseconds
+for the simulated dummy workload. After that time passes, the callback will 
+publish a message to the topics listed in the publishes_to list
+*/
 message Callback
 {
 	string name = 1;
 	uint32 exec_time_us = 2;
 	repeated string publishes_to = 3;
 }
- 
+
+// We consider timers as periodically invoked callbacks
+message Timer
+{
+	uint32 frequency_hz = 1;
+	Callback callback = 2;
+}
+
+// Links a callback to a topic
 message Subscription
 {
 	string callback = 1;
 	string topic = 2;
+
+	// Used to simulate latency between a message arriving on the topic and the 
+	// subscribed callback actually getting invoked.
 	uint32 latency_us = 3;
 }
 
-message ROSGraph
+// Callback group is a list of callbacks that cannot be run simultaneously 
+message CallbackGroup
 {
 	string name = 1;
-	repeated Topic topics = 2;
-	repeated Timer timers = 3;
-	repeated Callback callbacks = 4;
-	repeated Subscription subscriptions = 5;
+	// Each callback that's a member will be included here by name
+	repeated string members = 2;
+}
+
+message Node
+{
+	string name = 1;
+	repeated Timer timers = 2;
+	repeated Callback callbacks = 3;
+	repeated Subscription subscriptions = 4;
+	repeated CallbackGroup callback_groups = 5;
+}
+
+message Graph
+{
+	string name = 1;
+	repeated Node nodes = 2;
+	repeated Topic topics = 3;
 }

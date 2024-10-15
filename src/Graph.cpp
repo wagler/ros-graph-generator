@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include <regex>
 #include <utility>
+#include <sstream>
 
 // ROS includes
 #include "rclcpp/rclcpp.hpp"
@@ -24,11 +25,7 @@
 using namespace std::chrono_literals;
 
 Graph::Graph(const std::string &graphFilePath)
-    : Node("dummy_node")
 {
-    // Initialize the protobuf library
-    GOOGLE_PROTOBUF_VERIFY_VERSION;
-
     // Validates the input graph file is well formed, and fills in the member structures
     // that keep track of the topics, timers, callbacks, and subscriptions
 
@@ -36,46 +33,47 @@ Graph::Graph(const std::string &graphFilePath)
     int fd = open(graphFilePath.c_str(), O_RDONLY);
     if (fd < 0)
     {
-        RCLCPP_ERROR(this->get_logger(), "Failed to open file %s", graphFilePath.c_str());
+        std::cerr << "Failed to open file " << graphFilePath << std::endl;
         return;
     }
 
     std::unique_ptr<google::protobuf::io::ZeroCopyInputStream> input(
         new google::protobuf::io::FileInputStream(fd));
 
-    // Read the message from the text file
-    if (!google::protobuf::TextFormat::Parse(input.get(), &(this->rosGraph)))
+    // Read the protobuf message from the text file
+    if (!google::protobuf::TextFormat::Parse(input.get(), &graph))
     {
-        RCLCPP_ERROR(this->get_logger(), "Protobuf failed to parse graph configuration file.");
+        std::cerr << "Protobuf failed to parse graph configuration file." << std::endl;
         return;
     }
 
-    // Do the actual setup of the ROS structures
-    int numErrors = 0;
-
-    // Test 1 - validate the topic names are all valid
-    numErrors += setupTopics();
-
-    // Test 2 - validate the timers all publish to only valid topics that exist.
-    numErrors += setupTimers();
-
-    // Test 3 - validate the callbacks all publish to only valid topics that exist.
-    numErrors += setupCallbacks();
-
-    // Test 4 - validate the subscriptions have a valid callback and topic name
-    numErrors += setupSubscriptions();
-
+    // Creates the map of topics -> message size
+    int numErrors = setupTopics();
     if (numErrors > 0)
     {
-        RCLCPP_ERROR(this->get_logger(), "Detected %d errors in the input graph configuration file.", numErrors);
-        RCLCPP_ERROR(this->get_logger(), "Graph is not well formed. Exiting...");
-        rclcpp::shutdown();
-        exit(1);
+        std::cerr << "Detected " << numErrors << " errors in the input graph configuration file.\n";
+        std::cerr << "Graph is not well formed. Exiting..." << std::endl;
+        return;
     }
 
-    std::cout << "No errors found with input graph configuration file." << std::endl;
+    std::cout << "No errors found with input graph configuration file. Creating nodes..." << std::endl;
+
+    name = graph.name();
+
+    // Creates the individual nodes, which contain the callbacks, timers, subscriptions
+    for (const auto &node : graph.nodes())
+    {
+        std::shared_ptr<DummyNode> newNode = std::make_shared<DummyNode>(node, topics);
+        nodes.push_back(newNode);
+    }
 
     printGraphStats();
+
+    for (const auto &node : nodes)
+    {
+        executor.add_node(node);
+    }
+    executor.spin();
 }
 
 int Graph::setupTopics()
@@ -83,193 +81,86 @@ int Graph::setupTopics()
     int numErrors = 0;
     std::regex pattern(R"((?=.*[A-z0-9_]$)^[/~A-z][A-z0-9_/]*$)");
 
-    // Test 1 - validate the topic names are all valid
-    for (const auto &topic : rosGraph.topics())
+    // Validate the topic names are all valid
+    for (const auto &topic : graph.topics())
     {
         const std::string &name = topic.name();
         if (!std::regex_match(name, pattern))
         {
-            RCLCPP_ERROR(this->get_logger(), "Error: Topic name %s is invalid.", name.c_str());
+            std::cerr << "Error: Topic name " << name << " is invalid." << std::endl;
             numErrors++;
             continue;
         }
 
-        // If topic name is valid string, then create a publisher for it.
-        rclcpp::Publisher<std_msgs::msg::String>::SharedPtr tempPublisher =
-            this->create_publisher<std_msgs::msg::String>(name, 10);
-
-        // Insert a pointer to the publisher into our bookkeeping structure.
-        std::string tempName = name;
-        publishers.insert(std::make_pair(tempName, tempPublisher));
+        const uint32_t msgSize = topic.msg_size_bytes();
+        topics.insert(std::make_pair(name, msgSize));
     }
 
     if (numErrors > 0)
     {
-        RCLCPP_ERROR(this->get_logger(), "Detected %d errors with the topics.", numErrors);
+        std::cerr << "Error: detected " << numErrors << " errors with the topics" << std::endl;
     }
 
     return numErrors;
 }
 
-int Graph::setupTimers()
+/*
+static inline printTopic(std::stringstream &ss, const ros_graph::Topic &topic)
 {
-    int numErrors = 0;
-    for (const auto &timer : rosGraph.timers())
+    uint32_t count = 1;
+    for (const auto &topic : graph.topics())
     {
-        // Extract the timer's frequency and calculate its period
-        const uint32_t freq_hz = timer.frequency_hz();
-        const double period = 1000 / ((double)freq_hz);
-        // const auto timer_duration_us = std::chrono::microseconds(static_cast<int64_t>(period));
-        const auto timer_duration = std::chrono::milliseconds(static_cast<int64_t>(std::round(period))); // Adjust as needed
-
-        // Find the topics that the timer publishes to which are valid
-        Graph::Callback tempCallback;
-        tempCallback.execTimeUs = timer.exec_time_us();
-
-        for (const auto &topic : timer.publishes_to())
-        {
-            if (publishers.find(topic) == publishers.end())
-            {
-                RCLCPP_ERROR(this->get_logger(), "Error: Timer %s publishes to a non-existant topic %s", timer.name().c_str(), topic.c_str());
-                numErrors++;
-                continue;
-            }
-            tempCallback.publishesTo.push_back(topic);
-        }
-
-        callbacks.insert(std::make_pair(timer.name(), tempCallback));
-
-        // Create the actual timer
-        RCLCPP_INFO(this->get_logger(), "Setup timer with frequency %u Hz, period is %ld ms", freq_hz, (int64_t)timer_duration.count());
-        rclcpp::TimerBase::SharedPtr tempTimer = this->create_wall_timer(
-            timer_duration,
-            [this, timer]() -> void
-            { this->execCallback(timer.name(), this->callbacks.at(timer.name())); });
-        timers.insert(std::make_pair(timer.name(), tempTimer));
+        std::cout << "\t" << count << ") " << topic.name() << "\n";
+        std::cout << "\t\tSize (B)" << topic.msg_size_bytes() << "\n";
+        count++;
     }
-
-    if (numErrors > 0)
-    {
-        RCLCPP_ERROR(this->get_logger(), "Detected %d errors with the timers.", numErrors);
-    }
-    return numErrors;
 }
 
-int Graph::setupCallbacks()
+static inline printNode(const ros_graph::Node &node)
 {
-    int numErrors = 0;
-    for (const auto &callback : rosGraph.callbacks())
-    {
-        std::vector<std::string> validTopics;
-        Graph::Callback tempCallback;
-        tempCallback.execTimeUs = callback.exec_time_us();
-
-        for (const auto &topic : callback.publishes_to())
-        {
-            if (publishers.find(topic) == publishers.end())
-            {
-                RCLCPP_ERROR(this->get_logger(), "Error: Callback %s publishes to a non-existant topic %s", callback.name().c_str(), topic.c_str());
-                numErrors++;
-                continue;
-            }
-
-            tempCallback.publishesTo.push_back(topic);
-        }
-
-        callbacks.insert(std::make_pair(callback.name(), tempCallback));
-    }
-
-    if (numErrors > 0)
-    {
-        RCLCPP_ERROR(this->get_logger(), "Detected %d errors with the callbacks.", numErrors);
-    }
-    return numErrors;
 }
 
-int Graph::setupSubscriptions()
+static inline printTimer(const ros_graph::Timer &timer)
 {
-    int numErrors = 0;
-    for (const auto &subscription : rosGraph.subscriptions())
-    {
-        bool error = false;
-        if (publishers.find(subscription.topic()) == publishers.end())
-        {
-            RCLCPP_ERROR(this->get_logger(), "Error: subscription (%s, %s) references a non-existant topic %s", subscription.topic().c_str(), subscription.callback().c_str(), subscription.topic().c_str());
-            numErrors++;
-            error = true;
-        }
-
-        if (callbacks.find(subscription.callback()) == callbacks.end())
-        {
-            RCLCPP_ERROR(this->get_logger(), "Error: subscription (%s, %s) references a non-existant callback %s", subscription.topic().c_str(), subscription.callback().c_str(), subscription.callback().c_str());
-            numErrors++;
-            error = true;
-        }
-
-        // If the subscription was valid, then set it up in ROS
-        if (!error)
-        {
-            const std::string topic = subscription.topic();
-            const std::string callbackName = subscription.callback();
-            // const uint32_t execTimeUs = callbacks.at(callbackName).execTimeUs;
-            const std::vector<std::string> pubTopicList = callbacks.at(callbackName).publishesTo;
-
-            rclcpp::Subscription<std_msgs::msg::String>::SharedPtr tempSub =
-                this->create_subscription<std_msgs::msg::String>(
-                    topic, 10,
-                    [this, callbackName](const std_msgs::msg::String &msg) -> void
-                    {
-                        RCLCPP_INFO(this->get_logger(), "Callback '%s' invoked with message '%s'", callbackName.c_str(), msg.data.c_str());
-                        this->execCallback(callbackName, callbacks.at(callbackName));
-                    });
-
-            subscriptions.push_back(tempSub);
-        }
-    }
-
-    if (numErrors > 0)
-    {
-        RCLCPP_ERROR(this->get_logger(), "Detected %d errors with the subscriptions.", numErrors);
-    }
-    return numErrors;
 }
 
-void Graph::execCallback(const std::string name, const Graph::Callback cb)
+static inline printCallback(const ros_graph::Callback &callback)
 {
-    const auto start = std::chrono::high_resolution_clock::now();
-    const auto end = start + std::chrono::microseconds(cb.execTimeUs);
+}
 
-    // Busy-wait loop
-    while (std::chrono::high_resolution_clock::now() < end)
-    {
-    }
+static inline printSubscription(const ros_graph::Subscription &subscription)
+{
+}
 
-    for (const auto &topic : cb.publishesTo)
-    {
-        auto message = std_msgs::msg::String();
-        message.data = "Hello, world! from " + name;
-        RCLCPP_INFO(this->get_logger(), "%s publishing: '%s' on topic %s",
-                    name.c_str(), message.data.c_str(), topic.c_str());
-
-        publishers.at(topic)->publish(message);
-    }
+static inline printCallbackGroup(const ros_graph::CallbackGroup &callbackGroup)
+{
 }
 
 void Graph::printGraphStats() const
 {
-    std::cout << "Graph Name: " << rosGraph.name() << "\n";
+    std::cout << "Graph Name: " << graph.name() << "\n";
 
     std::cout << "Topics:\n";
     uint32_t count = 1;
-    for (const auto &topic : rosGraph.topics())
+    for (const auto &topic : graph.topics())
     {
         std::cout << "\t" << count << ") " << topic.name() << "\n";
+        std::cout << "\t\tSize (B)" << topic.msg_size_bytes() << "\n";
+        count++;
+    }
+
+    std::cout << "Nodes:\n";
+    uint32_t count = 1;
+    for (const auto &node : graph.nodes())
+    {
+        std::cout << "\t" << count << ") " << node.name() << "\n";
+        std::cout << "\t\tSize (B)" << topic.msg_size_bytes() << "\n";
         count++;
     }
 
     count = 1;
     std::cout << "Timers: \n";
-    for (const auto &timer : rosGraph.timers())
+    for (const auto &timer : graph.timers())
     {
         std::cout << "\t" << count << ") " << timer.name() << "\n";
         std::cout << "\t\tFrequency (Hz): " << timer.frequency_hz() << "\n";
@@ -285,7 +176,7 @@ void Graph::printGraphStats() const
 
     count = 1;
     std::cout << "Callbacks:\n";
-    for (const auto &callback : rosGraph.callbacks())
+    for (const auto &callback : graph.callbacks())
     {
         std::cout << "\t" << count << ") " << callback.name() << "\n";
         std::cout << "\t\tExecution Time (us): " << callback.exec_time_us() << " us\n";
@@ -300,9 +191,74 @@ void Graph::printGraphStats() const
 
     count = 1;
     std::cout << "Subscriptions: \n";
-    for (const auto &sub : rosGraph.subscriptions())
+    for (const auto &sub : graph.subscriptions())
     {
         std::cout << "\t" << count << ") " << sub.topic()
                   << " --- " << sub.latency_us() << " us ---> " << sub.callback() << "\n";
+    }
+}
+*/
+
+void Graph::printGraphStats() const
+{
+    std::cout << "Graph Name: " << graph.name() << "\n";
+
+    // Print Nodes
+    std::cout << "Nodes:\n";
+    for (const auto &node : graph.nodes())
+    {
+        std::cout << "  Node Name: " << node.name() << "\n";
+
+        // Print Timers
+        std::cout << "  Timers:\n";
+        for (const auto &timer : node.timers())
+        {
+            std::cout << "    Frequency (Hz): " << timer.frequency_hz() << "\n";
+            std::cout << "    Callback Name: " << timer.callback().name() << "\n";
+        }
+
+        // Print Callbacks
+        std::cout << "  Callbacks:\n";
+        for (const auto &callback : node.callbacks())
+        {
+            std::cout << "    Name: " << callback.name() << "\n";
+            std::cout << "    Execution Time (us): " << callback.exec_time_us() << "\n";
+            std::cout << "    Publishes To: ";
+            for (const auto &topic : callback.publishes_to())
+            {
+                std::cout << topic << " ";
+            }
+            std::cout << "\n";
+        }
+
+        // Print Subscriptions
+        std::cout << "  Subscriptions:\n";
+        for (const auto &subscription : node.subscriptions())
+        {
+            std::cout << "    Callback: " << subscription.callback() << "\n";
+            std::cout << "    Topic: " << subscription.topic() << "\n";
+            std::cout << "    Latency (us): " << subscription.latency_us() << "\n";
+        }
+
+        // Print Callback Groups
+        std::cout << "  Callback Groups:\n";
+        for (const auto &group : node.callback_groups())
+        {
+            std::cout << "    Group Name: " << group.name() << "\n";
+            std::cout << "    Members: ";
+            for (const auto &member : group.members())
+            {
+                std::cout << member << " ";
+            }
+            std::cout << "\n";
+        }
+    }
+
+    // Print Topics
+    std::cout << "Topics:\n";
+    for (const auto &topic : graph.topics())
+    {
+        std::cout << "  Topic Name: " << topic.name() << "\n";
+        std::cout << "  Message Size (bytes): " << topic.msg_size_bytes() << "\n";
     }
 }

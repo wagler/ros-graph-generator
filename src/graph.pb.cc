@@ -24,6 +24,7 @@ namespace ros_graph {
 PROTOBUF_CONSTEXPR Topic::Topic(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.msg_size_bytes_)*/0u
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct TopicDefaultTypeInternal {
   PROTOBUF_CONSTEXPR TopicDefaultTypeInternal()
@@ -34,22 +35,6 @@ struct TopicDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TopicDefaultTypeInternal _Topic_default_instance_;
-PROTOBUF_CONSTEXPR Timer::Timer(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.publishes_to_)*/{}
-  , /*decltype(_impl_.name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.frequency_hz_)*/0u
-  , /*decltype(_impl_.exec_time_us_)*/0u
-  , /*decltype(_impl_._cached_size_)*/{}} {}
-struct TimerDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR TimerDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
-  ~TimerDefaultTypeInternal() {}
-  union {
-    Timer _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TimerDefaultTypeInternal _Timer_default_instance_;
 PROTOBUF_CONSTEXPR Callback::Callback(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.publishes_to_)*/{}
@@ -65,6 +50,20 @@ struct CallbackDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CallbackDefaultTypeInternal _Callback_default_instance_;
+PROTOBUF_CONSTEXPR Timer::Timer(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.callback_)*/nullptr
+  , /*decltype(_impl_.frequency_hz_)*/0u
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct TimerDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR TimerDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~TimerDefaultTypeInternal() {}
+  union {
+    Timer _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TimerDefaultTypeInternal _Timer_default_instance_;
 PROTOBUF_CONSTEXPR Subscription::Subscription(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.callback_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
@@ -80,25 +79,54 @@ struct SubscriptionDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SubscriptionDefaultTypeInternal _Subscription_default_instance_;
-PROTOBUF_CONSTEXPR ROSGraph::ROSGraph(
+PROTOBUF_CONSTEXPR CallbackGroup::CallbackGroup(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.topics_)*/{}
-  , /*decltype(_impl_.timers_)*/{}
-  , /*decltype(_impl_.callbacks_)*/{}
-  , /*decltype(_impl_.subscriptions_)*/{}
+    /*decltype(_impl_.members_)*/{}
   , /*decltype(_impl_.name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_._cached_size_)*/{}} {}
-struct ROSGraphDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ROSGraphDefaultTypeInternal()
+struct CallbackGroupDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR CallbackGroupDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~ROSGraphDefaultTypeInternal() {}
+  ~CallbackGroupDefaultTypeInternal() {}
   union {
-    ROSGraph _instance;
+    CallbackGroup _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ROSGraphDefaultTypeInternal _ROSGraph_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CallbackGroupDefaultTypeInternal _CallbackGroup_default_instance_;
+PROTOBUF_CONSTEXPR Node::Node(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.timers_)*/{}
+  , /*decltype(_impl_.callbacks_)*/{}
+  , /*decltype(_impl_.subscriptions_)*/{}
+  , /*decltype(_impl_.callback_groups_)*/{}
+  , /*decltype(_impl_.name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct NodeDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR NodeDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~NodeDefaultTypeInternal() {}
+  union {
+    Node _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 NodeDefaultTypeInternal _Node_default_instance_;
+PROTOBUF_CONSTEXPR Graph::Graph(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.nodes_)*/{}
+  , /*decltype(_impl_.topics_)*/{}
+  , /*decltype(_impl_.name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct GraphDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GraphDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GraphDefaultTypeInternal() {}
+  union {
+    Graph _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GraphDefaultTypeInternal _Graph_default_instance_;
 }  // namespace ros_graph
-static ::_pb::Metadata file_level_metadata_graph_2eproto[5];
+static ::_pb::Metadata file_level_metadata_graph_2eproto[7];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_graph_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_graph_2eproto = nullptr;
 
@@ -110,16 +138,7 @@ const uint32_t TableStruct_graph_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(pr
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::ros_graph::Topic, _impl_.name_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::ros_graph::Timer, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::ros_graph::Timer, _impl_.name_),
-  PROTOBUF_FIELD_OFFSET(::ros_graph::Timer, _impl_.frequency_hz_),
-  PROTOBUF_FIELD_OFFSET(::ros_graph::Timer, _impl_.exec_time_us_),
-  PROTOBUF_FIELD_OFFSET(::ros_graph::Timer, _impl_.publishes_to_),
+  PROTOBUF_FIELD_OFFSET(::ros_graph::Topic, _impl_.msg_size_bytes_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::ros_graph::Callback, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -130,6 +149,14 @@ const uint32_t TableStruct_graph_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(pr
   PROTOBUF_FIELD_OFFSET(::ros_graph::Callback, _impl_.exec_time_us_),
   PROTOBUF_FIELD_OFFSET(::ros_graph::Callback, _impl_.publishes_to_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::ros_graph::Timer, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::ros_graph::Timer, _impl_.frequency_hz_),
+  PROTOBUF_FIELD_OFFSET(::ros_graph::Timer, _impl_.callback_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::ros_graph::Subscription, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -139,52 +166,77 @@ const uint32_t TableStruct_graph_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(pr
   PROTOBUF_FIELD_OFFSET(::ros_graph::Subscription, _impl_.topic_),
   PROTOBUF_FIELD_OFFSET(::ros_graph::Subscription, _impl_.latency_us_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::ros_graph::ROSGraph, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::ros_graph::CallbackGroup, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::ros_graph::ROSGraph, _impl_.name_),
-  PROTOBUF_FIELD_OFFSET(::ros_graph::ROSGraph, _impl_.topics_),
-  PROTOBUF_FIELD_OFFSET(::ros_graph::ROSGraph, _impl_.timers_),
-  PROTOBUF_FIELD_OFFSET(::ros_graph::ROSGraph, _impl_.callbacks_),
-  PROTOBUF_FIELD_OFFSET(::ros_graph::ROSGraph, _impl_.subscriptions_),
+  PROTOBUF_FIELD_OFFSET(::ros_graph::CallbackGroup, _impl_.name_),
+  PROTOBUF_FIELD_OFFSET(::ros_graph::CallbackGroup, _impl_.members_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::ros_graph::Node, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::ros_graph::Node, _impl_.name_),
+  PROTOBUF_FIELD_OFFSET(::ros_graph::Node, _impl_.timers_),
+  PROTOBUF_FIELD_OFFSET(::ros_graph::Node, _impl_.callbacks_),
+  PROTOBUF_FIELD_OFFSET(::ros_graph::Node, _impl_.subscriptions_),
+  PROTOBUF_FIELD_OFFSET(::ros_graph::Node, _impl_.callback_groups_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::ros_graph::Graph, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::ros_graph::Graph, _impl_.name_),
+  PROTOBUF_FIELD_OFFSET(::ros_graph::Graph, _impl_.nodes_),
+  PROTOBUF_FIELD_OFFSET(::ros_graph::Graph, _impl_.topics_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::ros_graph::Topic)},
-  { 7, -1, -1, sizeof(::ros_graph::Timer)},
-  { 17, -1, -1, sizeof(::ros_graph::Callback)},
-  { 26, -1, -1, sizeof(::ros_graph::Subscription)},
-  { 35, -1, -1, sizeof(::ros_graph::ROSGraph)},
+  { 8, -1, -1, sizeof(::ros_graph::Callback)},
+  { 17, -1, -1, sizeof(::ros_graph::Timer)},
+  { 25, -1, -1, sizeof(::ros_graph::Subscription)},
+  { 34, -1, -1, sizeof(::ros_graph::CallbackGroup)},
+  { 42, -1, -1, sizeof(::ros_graph::Node)},
+  { 53, -1, -1, sizeof(::ros_graph::Graph)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
   &::ros_graph::_Topic_default_instance_._instance,
-  &::ros_graph::_Timer_default_instance_._instance,
   &::ros_graph::_Callback_default_instance_._instance,
+  &::ros_graph::_Timer_default_instance_._instance,
   &::ros_graph::_Subscription_default_instance_._instance,
-  &::ros_graph::_ROSGraph_default_instance_._instance,
+  &::ros_graph::_CallbackGroup_default_instance_._instance,
+  &::ros_graph::_Node_default_instance_._instance,
+  &::ros_graph::_Graph_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_graph_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\013graph.proto\022\tros_graph\"\025\n\005Topic\022\014\n\004nam"
-  "e\030\001 \001(\t\"W\n\005Timer\022\014\n\004name\030\001 \001(\t\022\024\n\014freque"
-  "ncy_hz\030\002 \001(\r\022\024\n\014exec_time_us\030\003 \001(\r\022\024\n\014pu"
-  "blishes_to\030\004 \003(\t\"D\n\010Callback\022\014\n\004name\030\001 \001"
-  "(\t\022\024\n\014exec_time_us\030\002 \001(\r\022\024\n\014publishes_to"
-  "\030\003 \003(\t\"C\n\014Subscription\022\020\n\010callback\030\001 \001(\t"
-  "\022\r\n\005topic\030\002 \001(\t\022\022\n\nlatency_us\030\003 \001(\r\"\264\001\n\010"
-  "ROSGraph\022\014\n\004name\030\001 \001(\t\022 \n\006topics\030\002 \003(\0132\020"
-  ".ros_graph.Topic\022 \n\006timers\030\003 \003(\0132\020.ros_g"
-  "raph.Timer\022&\n\tcallbacks\030\004 \003(\0132\023.ros_grap"
-  "h.Callback\022.\n\rsubscriptions\030\005 \003(\0132\027.ros_"
-  "graph.Subscriptionb\006proto3"
+  "\n\013graph.proto\022\tros_graph\"-\n\005Topic\022\014\n\004nam"
+  "e\030\001 \001(\t\022\026\n\016msg_size_bytes\030\002 \001(\r\"D\n\010Callb"
+  "ack\022\014\n\004name\030\001 \001(\t\022\024\n\014exec_time_us\030\002 \001(\r\022"
+  "\024\n\014publishes_to\030\003 \003(\t\"D\n\005Timer\022\024\n\014freque"
+  "ncy_hz\030\001 \001(\r\022%\n\010callback\030\002 \001(\0132\023.ros_gra"
+  "ph.Callback\"C\n\014Subscription\022\020\n\010callback\030"
+  "\001 \001(\t\022\r\n\005topic\030\002 \001(\t\022\022\n\nlatency_us\030\003 \001(\r"
+  "\".\n\rCallbackGroup\022\014\n\004name\030\001 \001(\t\022\017\n\007membe"
+  "rs\030\002 \003(\t\"\301\001\n\004Node\022\014\n\004name\030\001 \001(\t\022 \n\006timer"
+  "s\030\002 \003(\0132\020.ros_graph.Timer\022&\n\tcallbacks\030\003"
+  " \003(\0132\023.ros_graph.Callback\022.\n\rsubscriptio"
+  "ns\030\004 \003(\0132\027.ros_graph.Subscription\0221\n\017cal"
+  "lback_groups\030\005 \003(\0132\030.ros_graph.CallbackG"
+  "roup\"W\n\005Graph\022\014\n\004name\030\001 \001(\t\022\036\n\005nodes\030\002 \003"
+  "(\0132\017.ros_graph.Node\022 \n\006topics\030\003 \003(\0132\020.ro"
+  "s_graph.Topicb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_graph_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_graph_2eproto = {
-    false, false, 466, descriptor_table_protodef_graph_2eproto,
+    false, false, 621, descriptor_table_protodef_graph_2eproto,
     "graph.proto",
-    &descriptor_table_graph_2eproto_once, nullptr, 0, 5,
+    &descriptor_table_graph_2eproto_once, nullptr, 0, 7,
     schemas, file_default_instances, TableStruct_graph_2eproto::offsets,
     file_level_metadata_graph_2eproto, file_level_enum_descriptors_graph_2eproto,
     file_level_service_descriptors_graph_2eproto,
@@ -214,6 +266,7 @@ Topic::Topic(const Topic& from)
   Topic* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.name_){}
+    , decltype(_impl_.msg_size_bytes_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -225,6 +278,7 @@ Topic::Topic(const Topic& from)
     _this->_impl_.name_.Set(from._internal_name(), 
       _this->GetArenaForAllocation());
   }
+  _this->_impl_.msg_size_bytes_ = from._impl_.msg_size_bytes_;
   // @@protoc_insertion_point(copy_constructor:ros_graph.Topic)
 }
 
@@ -234,6 +288,7 @@ inline void Topic::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.name_){}
+    , decltype(_impl_.msg_size_bytes_){0u}
     , /*decltype(_impl_._cached_size_)*/{}
   };
   _impl_.name_.InitDefault();
@@ -267,6 +322,7 @@ void Topic::Clear() {
   (void) cached_has_bits;
 
   _impl_.name_.ClearToEmpty();
+  _impl_.msg_size_bytes_ = 0u;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -283,6 +339,14 @@ const char* Topic::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
           CHK_(::_pbi::VerifyUTF8(str, "ros_graph.Topic.name"));
+        } else
+          goto handle_unusual;
+        continue;
+      // uint32 msg_size_bytes = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.msg_size_bytes_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
@@ -325,6 +389,12 @@ uint8_t* Topic::_InternalSerialize(
         1, this->_internal_name(), target);
   }
 
+  // uint32 msg_size_bytes = 2;
+  if (this->_internal_msg_size_bytes() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(2, this->_internal_msg_size_bytes(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -348,6 +418,11 @@ size_t Topic::ByteSizeLong() const {
         this->_internal_name());
   }
 
+  // uint32 msg_size_bytes = 2;
+  if (this->_internal_msg_size_bytes() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_msg_size_bytes());
+  }
+
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -368,6 +443,9 @@ void Topic::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF
 
   if (!from._internal_name().empty()) {
     _this->_internal_set_name(from._internal_name());
+  }
+  if (from._internal_msg_size_bytes() != 0) {
+    _this->_internal_set_msg_size_bytes(from._internal_msg_size_bytes());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -392,314 +470,13 @@ void Topic::InternalSwap(Topic* other) {
       &_impl_.name_, lhs_arena,
       &other->_impl_.name_, rhs_arena
   );
+  swap(_impl_.msg_size_bytes_, other->_impl_.msg_size_bytes_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Topic::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_graph_2eproto_getter, &descriptor_table_graph_2eproto_once,
       file_level_metadata_graph_2eproto[0]);
-}
-
-// ===================================================================
-
-class Timer::_Internal {
- public:
-};
-
-Timer::Timer(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:ros_graph.Timer)
-}
-Timer::Timer(const Timer& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  Timer* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.publishes_to_){from._impl_.publishes_to_}
-    , decltype(_impl_.name_){}
-    , decltype(_impl_.frequency_hz_){}
-    , decltype(_impl_.exec_time_us_){}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.name_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.name_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_name().empty()) {
-    _this->_impl_.name_.Set(from._internal_name(), 
-      _this->GetArenaForAllocation());
-  }
-  ::memcpy(&_impl_.frequency_hz_, &from._impl_.frequency_hz_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.exec_time_us_) -
-    reinterpret_cast<char*>(&_impl_.frequency_hz_)) + sizeof(_impl_.exec_time_us_));
-  // @@protoc_insertion_point(copy_constructor:ros_graph.Timer)
-}
-
-inline void Timer::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
-  (void)arena;
-  (void)is_message_owned;
-  new (&_impl_) Impl_{
-      decltype(_impl_.publishes_to_){arena}
-    , decltype(_impl_.name_){}
-    , decltype(_impl_.frequency_hz_){0u}
-    , decltype(_impl_.exec_time_us_){0u}
-    , /*decltype(_impl_._cached_size_)*/{}
-  };
-  _impl_.name_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.name_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-}
-
-Timer::~Timer() {
-  // @@protoc_insertion_point(destructor:ros_graph.Timer)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
-  SharedDtor();
-}
-
-inline void Timer::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.publishes_to_.~RepeatedPtrField();
-  _impl_.name_.Destroy();
-}
-
-void Timer::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-void Timer::Clear() {
-// @@protoc_insertion_point(message_clear_start:ros_graph.Timer)
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _impl_.publishes_to_.Clear();
-  _impl_.name_.ClearToEmpty();
-  ::memset(&_impl_.frequency_hz_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.exec_time_us_) -
-      reinterpret_cast<char*>(&_impl_.frequency_hz_)) + sizeof(_impl_.exec_time_us_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* Timer::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string name = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_name();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "ros_graph.Timer.name"));
-        } else
-          goto handle_unusual;
-        continue;
-      // uint32 frequency_hz = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          _impl_.frequency_hz_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // uint32 exec_time_us = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
-          _impl_.exec_time_us_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // repeated string publishes_to = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            auto str = _internal_add_publishes_to();
-            ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-            CHK_(ptr);
-            CHK_(::_pbi::VerifyUTF8(str, "ros_graph.Timer.publishes_to"));
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<34>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
-}
-
-uint8_t* Timer::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:ros_graph.Timer)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // string name = 1;
-  if (!this->_internal_name().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_name().data(), static_cast<int>(this->_internal_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "ros_graph.Timer.name");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_name(), target);
-  }
-
-  // uint32 frequency_hz = 2;
-  if (this->_internal_frequency_hz() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(2, this->_internal_frequency_hz(), target);
-  }
-
-  // uint32 exec_time_us = 3;
-  if (this->_internal_exec_time_us() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(3, this->_internal_exec_time_us(), target);
-  }
-
-  // repeated string publishes_to = 4;
-  for (int i = 0, n = this->_internal_publishes_to_size(); i < n; i++) {
-    const auto& s = this->_internal_publishes_to(i);
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      s.data(), static_cast<int>(s.length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "ros_graph.Timer.publishes_to");
-    target = stream->WriteString(4, s, target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:ros_graph.Timer)
-  return target;
-}
-
-size_t Timer::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:ros_graph.Timer)
-  size_t total_size = 0;
-
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // repeated string publishes_to = 4;
-  total_size += 1 *
-      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.publishes_to_.size());
-  for (int i = 0, n = _impl_.publishes_to_.size(); i < n; i++) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-      _impl_.publishes_to_.Get(i));
-  }
-
-  // string name = 1;
-  if (!this->_internal_name().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_name());
-  }
-
-  // uint32 frequency_hz = 2;
-  if (this->_internal_frequency_hz() != 0) {
-    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_frequency_hz());
-  }
-
-  // uint32 exec_time_us = 3;
-  if (this->_internal_exec_time_us() != 0) {
-    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_exec_time_us());
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Timer::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    Timer::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Timer::GetClassData() const { return &_class_data_; }
-
-
-void Timer::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<Timer*>(&to_msg);
-  auto& from = static_cast<const Timer&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:ros_graph.Timer)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  _this->_impl_.publishes_to_.MergeFrom(from._impl_.publishes_to_);
-  if (!from._internal_name().empty()) {
-    _this->_internal_set_name(from._internal_name());
-  }
-  if (from._internal_frequency_hz() != 0) {
-    _this->_internal_set_frequency_hz(from._internal_frequency_hz());
-  }
-  if (from._internal_exec_time_us() != 0) {
-    _this->_internal_set_exec_time_us(from._internal_exec_time_us());
-  }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void Timer::CopyFrom(const Timer& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:ros_graph.Timer)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool Timer::IsInitialized() const {
-  return true;
-}
-
-void Timer::InternalSwap(Timer* other) {
-  using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  _impl_.publishes_to_.InternalSwap(&other->_impl_.publishes_to_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.name_, lhs_arena,
-      &other->_impl_.name_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(Timer, _impl_.exec_time_us_)
-      + sizeof(Timer::_impl_.exec_time_us_)
-      - PROTOBUF_FIELD_OFFSET(Timer, _impl_.frequency_hz_)>(
-          reinterpret_cast<char*>(&_impl_.frequency_hz_),
-          reinterpret_cast<char*>(&other->_impl_.frequency_hz_));
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata Timer::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_graph_2eproto_getter, &descriptor_table_graph_2eproto_once,
-      file_level_metadata_graph_2eproto[1]);
 }
 
 // ===================================================================
@@ -966,6 +743,230 @@ void Callback::InternalSwap(Callback* other) {
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Callback::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_graph_2eproto_getter, &descriptor_table_graph_2eproto_once,
+      file_level_metadata_graph_2eproto[1]);
+}
+
+// ===================================================================
+
+class Timer::_Internal {
+ public:
+  static const ::ros_graph::Callback& callback(const Timer* msg);
+};
+
+const ::ros_graph::Callback&
+Timer::_Internal::callback(const Timer* msg) {
+  return *msg->_impl_.callback_;
+}
+Timer::Timer(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:ros_graph.Timer)
+}
+Timer::Timer(const Timer& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  Timer* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.callback_){nullptr}
+    , decltype(_impl_.frequency_hz_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_callback()) {
+    _this->_impl_.callback_ = new ::ros_graph::Callback(*from._impl_.callback_);
+  }
+  _this->_impl_.frequency_hz_ = from._impl_.frequency_hz_;
+  // @@protoc_insertion_point(copy_constructor:ros_graph.Timer)
+}
+
+inline void Timer::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.callback_){nullptr}
+    , decltype(_impl_.frequency_hz_){0u}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+Timer::~Timer() {
+  // @@protoc_insertion_point(destructor:ros_graph.Timer)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void Timer::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.callback_;
+}
+
+void Timer::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void Timer::Clear() {
+// @@protoc_insertion_point(message_clear_start:ros_graph.Timer)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaForAllocation() == nullptr && _impl_.callback_ != nullptr) {
+    delete _impl_.callback_;
+  }
+  _impl_.callback_ = nullptr;
+  _impl_.frequency_hz_ = 0u;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Timer::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // uint32 frequency_hz = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.frequency_hz_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .ros_graph.Callback callback = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_callback(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* Timer::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:ros_graph.Timer)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 frequency_hz = 1;
+  if (this->_internal_frequency_hz() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_frequency_hz(), target);
+  }
+
+  // .ros_graph.Callback callback = 2;
+  if (this->_internal_has_callback()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::callback(this),
+        _Internal::callback(this).GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:ros_graph.Timer)
+  return target;
+}
+
+size_t Timer::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:ros_graph.Timer)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .ros_graph.Callback callback = 2;
+  if (this->_internal_has_callback()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.callback_);
+  }
+
+  // uint32 frequency_hz = 1;
+  if (this->_internal_frequency_hz() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_frequency_hz());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Timer::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    Timer::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Timer::GetClassData() const { return &_class_data_; }
+
+
+void Timer::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<Timer*>(&to_msg);
+  auto& from = static_cast<const Timer&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:ros_graph.Timer)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_callback()) {
+    _this->_internal_mutable_callback()->::ros_graph::Callback::MergeFrom(
+        from._internal_callback());
+  }
+  if (from._internal_frequency_hz() != 0) {
+    _this->_internal_set_frequency_hz(from._internal_frequency_hz());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void Timer::CopyFrom(const Timer& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:ros_graph.Timer)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Timer::IsInitialized() const {
+  return true;
+}
+
+void Timer::InternalSwap(Timer* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(Timer, _impl_.frequency_hz_)
+      + sizeof(Timer::_impl_.frequency_hz_)
+      - PROTOBUF_FIELD_OFFSET(Timer, _impl_.callback_)>(
+          reinterpret_cast<char*>(&_impl_.callback_),
+          reinterpret_cast<char*>(&other->_impl_.callback_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata Timer::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_graph_2eproto_getter, &descriptor_table_graph_2eproto_once,
       file_level_metadata_graph_2eproto[2]);
@@ -1253,24 +1254,21 @@ void Subscription::InternalSwap(Subscription* other) {
 
 // ===================================================================
 
-class ROSGraph::_Internal {
+class CallbackGroup::_Internal {
  public:
 };
 
-ROSGraph::ROSGraph(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+CallbackGroup::CallbackGroup(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:ros_graph.ROSGraph)
+  // @@protoc_insertion_point(arena_constructor:ros_graph.CallbackGroup)
 }
-ROSGraph::ROSGraph(const ROSGraph& from)
+CallbackGroup::CallbackGroup(const CallbackGroup& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
-  ROSGraph* const _this = this; (void)_this;
+  CallbackGroup* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.topics_){from._impl_.topics_}
-    , decltype(_impl_.timers_){from._impl_.timers_}
-    , decltype(_impl_.callbacks_){from._impl_.callbacks_}
-    , decltype(_impl_.subscriptions_){from._impl_.subscriptions_}
+      decltype(_impl_.members_){from._impl_.members_}
     , decltype(_impl_.name_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
@@ -1283,18 +1281,15 @@ ROSGraph::ROSGraph(const ROSGraph& from)
     _this->_impl_.name_.Set(from._internal_name(), 
       _this->GetArenaForAllocation());
   }
-  // @@protoc_insertion_point(copy_constructor:ros_graph.ROSGraph)
+  // @@protoc_insertion_point(copy_constructor:ros_graph.CallbackGroup)
 }
 
-inline void ROSGraph::SharedCtor(
+inline void CallbackGroup::SharedCtor(
     ::_pb::Arena* arena, bool is_message_owned) {
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.topics_){arena}
-    , decltype(_impl_.timers_){arena}
-    , decltype(_impl_.callbacks_){arena}
-    , decltype(_impl_.subscriptions_){arena}
+      decltype(_impl_.members_){arena}
     , decltype(_impl_.name_){}
     , /*decltype(_impl_._cached_size_)*/{}
   };
@@ -1304,8 +1299,8 @@ inline void ROSGraph::SharedCtor(
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
-ROSGraph::~ROSGraph() {
-  // @@protoc_insertion_point(destructor:ros_graph.ROSGraph)
+CallbackGroup::~CallbackGroup() {
+  // @@protoc_insertion_point(destructor:ros_graph.CallbackGroup)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -1313,34 +1308,28 @@ ROSGraph::~ROSGraph() {
   SharedDtor();
 }
 
-inline void ROSGraph::SharedDtor() {
+inline void CallbackGroup::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.topics_.~RepeatedPtrField();
-  _impl_.timers_.~RepeatedPtrField();
-  _impl_.callbacks_.~RepeatedPtrField();
-  _impl_.subscriptions_.~RepeatedPtrField();
+  _impl_.members_.~RepeatedPtrField();
   _impl_.name_.Destroy();
 }
 
-void ROSGraph::SetCachedSize(int size) const {
+void CallbackGroup::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void ROSGraph::Clear() {
-// @@protoc_insertion_point(message_clear_start:ros_graph.ROSGraph)
+void CallbackGroup::Clear() {
+// @@protoc_insertion_point(message_clear_start:ros_graph.CallbackGroup)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.topics_.Clear();
-  _impl_.timers_.Clear();
-  _impl_.callbacks_.Clear();
-  _impl_.subscriptions_.Clear();
+  _impl_.members_.Clear();
   _impl_.name_.ClearToEmpty();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* ROSGraph::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* CallbackGroup::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
@@ -1352,56 +1341,310 @@ const char* ROSGraph::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx)
           auto str = _internal_mutable_name();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "ros_graph.ROSGraph.name"));
+          CHK_(::_pbi::VerifyUTF8(str, "ros_graph.CallbackGroup.name"));
         } else
           goto handle_unusual;
         continue;
-      // repeated .ros_graph.Topic topics = 2;
+      // repeated string members = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           ptr -= 1;
           do {
             ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_topics(), ptr);
+            auto str = _internal_add_members();
+            ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
             CHK_(ptr);
+            CHK_(::_pbi::VerifyUTF8(str, "ros_graph.CallbackGroup.members"));
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
         } else
           goto handle_unusual;
         continue;
-      // repeated .ros_graph.Timer timers = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* CallbackGroup::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:ros_graph.CallbackGroup)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string name = 1;
+  if (!this->_internal_name().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_name().data(), static_cast<int>(this->_internal_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "ros_graph.CallbackGroup.name");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_name(), target);
+  }
+
+  // repeated string members = 2;
+  for (int i = 0, n = this->_internal_members_size(); i < n; i++) {
+    const auto& s = this->_internal_members(i);
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      s.data(), static_cast<int>(s.length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "ros_graph.CallbackGroup.members");
+    target = stream->WriteString(2, s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:ros_graph.CallbackGroup)
+  return target;
+}
+
+size_t CallbackGroup::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:ros_graph.CallbackGroup)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated string members = 2;
+  total_size += 1 *
+      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.members_.size());
+  for (int i = 0, n = _impl_.members_.size(); i < n; i++) {
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+      _impl_.members_.Get(i));
+  }
+
+  // string name = 1;
+  if (!this->_internal_name().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_name());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData CallbackGroup::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    CallbackGroup::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*CallbackGroup::GetClassData() const { return &_class_data_; }
+
+
+void CallbackGroup::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<CallbackGroup*>(&to_msg);
+  auto& from = static_cast<const CallbackGroup&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:ros_graph.CallbackGroup)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  _this->_impl_.members_.MergeFrom(from._impl_.members_);
+  if (!from._internal_name().empty()) {
+    _this->_internal_set_name(from._internal_name());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void CallbackGroup::CopyFrom(const CallbackGroup& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:ros_graph.CallbackGroup)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool CallbackGroup::IsInitialized() const {
+  return true;
+}
+
+void CallbackGroup::InternalSwap(CallbackGroup* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.members_.InternalSwap(&other->_impl_.members_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.name_, lhs_arena,
+      &other->_impl_.name_, rhs_arena
+  );
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata CallbackGroup::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_graph_2eproto_getter, &descriptor_table_graph_2eproto_once,
+      file_level_metadata_graph_2eproto[4]);
+}
+
+// ===================================================================
+
+class Node::_Internal {
+ public:
+};
+
+Node::Node(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:ros_graph.Node)
+}
+Node::Node(const Node& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  Node* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.timers_){from._impl_.timers_}
+    , decltype(_impl_.callbacks_){from._impl_.callbacks_}
+    , decltype(_impl_.subscriptions_){from._impl_.subscriptions_}
+    , decltype(_impl_.callback_groups_){from._impl_.callback_groups_}
+    , decltype(_impl_.name_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_name().empty()) {
+    _this->_impl_.name_.Set(from._internal_name(), 
+      _this->GetArenaForAllocation());
+  }
+  // @@protoc_insertion_point(copy_constructor:ros_graph.Node)
+}
+
+inline void Node::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.timers_){arena}
+    , decltype(_impl_.callbacks_){arena}
+    , decltype(_impl_.subscriptions_){arena}
+    , decltype(_impl_.callback_groups_){arena}
+    , decltype(_impl_.name_){}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+Node::~Node() {
+  // @@protoc_insertion_point(destructor:ros_graph.Node)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void Node::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.timers_.~RepeatedPtrField();
+  _impl_.callbacks_.~RepeatedPtrField();
+  _impl_.subscriptions_.~RepeatedPtrField();
+  _impl_.callback_groups_.~RepeatedPtrField();
+  _impl_.name_.Destroy();
+}
+
+void Node::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void Node::Clear() {
+// @@protoc_insertion_point(message_clear_start:ros_graph.Node)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.timers_.Clear();
+  _impl_.callbacks_.Clear();
+  _impl_.subscriptions_.Clear();
+  _impl_.callback_groups_.Clear();
+  _impl_.name_.ClearToEmpty();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Node::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // string name = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          auto str = _internal_mutable_name();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "ros_graph.Node.name"));
+        } else
+          goto handle_unusual;
+        continue;
+      // repeated .ros_graph.Timer timers = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           ptr -= 1;
           do {
             ptr += 1;
             ptr = ctx->ParseMessage(_internal_add_timers(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
         } else
           goto handle_unusual;
         continue;
-      // repeated .ros_graph.Callback callbacks = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+      // repeated .ros_graph.Callback callbacks = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           ptr -= 1;
           do {
             ptr += 1;
             ptr = ctx->ParseMessage(_internal_add_callbacks(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
+        } else
+          goto handle_unusual;
+        continue;
+      // repeated .ros_graph.Subscription subscriptions = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_subscriptions(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<34>(ptr));
         } else
           goto handle_unusual;
         continue;
-      // repeated .ros_graph.Subscription subscriptions = 5;
+      // repeated .ros_graph.CallbackGroup callback_groups = 5;
       case 5:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
           ptr -= 1;
           do {
             ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_subscriptions(), ptr);
+            ptr = ctx->ParseMessage(_internal_add_callback_groups(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<42>(ptr));
@@ -1431,9 +1674,9 @@ failure:
 #undef CHK_
 }
 
-uint8_t* ROSGraph::_InternalSerialize(
+uint8_t* Node::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:ros_graph.ROSGraph)
+  // @@protoc_insertion_point(serialize_to_array_start:ros_graph.Node)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -1442,39 +1685,39 @@ uint8_t* ROSGraph::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_name().data(), static_cast<int>(this->_internal_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "ros_graph.ROSGraph.name");
+      "ros_graph.Node.name");
     target = stream->WriteStringMaybeAliased(
         1, this->_internal_name(), target);
   }
 
-  // repeated .ros_graph.Topic topics = 2;
-  for (unsigned i = 0,
-      n = static_cast<unsigned>(this->_internal_topics_size()); i < n; i++) {
-    const auto& repfield = this->_internal_topics(i);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-        InternalWriteMessage(2, repfield, repfield.GetCachedSize(), target, stream);
-  }
-
-  // repeated .ros_graph.Timer timers = 3;
+  // repeated .ros_graph.Timer timers = 2;
   for (unsigned i = 0,
       n = static_cast<unsigned>(this->_internal_timers_size()); i < n; i++) {
     const auto& repfield = this->_internal_timers(i);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-        InternalWriteMessage(3, repfield, repfield.GetCachedSize(), target, stream);
+        InternalWriteMessage(2, repfield, repfield.GetCachedSize(), target, stream);
   }
 
-  // repeated .ros_graph.Callback callbacks = 4;
+  // repeated .ros_graph.Callback callbacks = 3;
   for (unsigned i = 0,
       n = static_cast<unsigned>(this->_internal_callbacks_size()); i < n; i++) {
     const auto& repfield = this->_internal_callbacks(i);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-        InternalWriteMessage(4, repfield, repfield.GetCachedSize(), target, stream);
+        InternalWriteMessage(3, repfield, repfield.GetCachedSize(), target, stream);
   }
 
-  // repeated .ros_graph.Subscription subscriptions = 5;
+  // repeated .ros_graph.Subscription subscriptions = 4;
   for (unsigned i = 0,
       n = static_cast<unsigned>(this->_internal_subscriptions_size()); i < n; i++) {
     const auto& repfield = this->_internal_subscriptions(i);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+        InternalWriteMessage(4, repfield, repfield.GetCachedSize(), target, stream);
+  }
+
+  // repeated .ros_graph.CallbackGroup callback_groups = 5;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_callback_groups_size()); i < n; i++) {
+    const auto& repfield = this->_internal_callback_groups(i);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
         InternalWriteMessage(5, repfield, repfield.GetCachedSize(), target, stream);
   }
@@ -1483,42 +1726,42 @@ uint8_t* ROSGraph::_InternalSerialize(
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:ros_graph.ROSGraph)
+  // @@protoc_insertion_point(serialize_to_array_end:ros_graph.Node)
   return target;
 }
 
-size_t ROSGraph::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:ros_graph.ROSGraph)
+size_t Node::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:ros_graph.Node)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated .ros_graph.Topic topics = 2;
-  total_size += 1UL * this->_internal_topics_size();
-  for (const auto& msg : this->_impl_.topics_) {
-    total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
-  }
-
-  // repeated .ros_graph.Timer timers = 3;
+  // repeated .ros_graph.Timer timers = 2;
   total_size += 1UL * this->_internal_timers_size();
   for (const auto& msg : this->_impl_.timers_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
-  // repeated .ros_graph.Callback callbacks = 4;
+  // repeated .ros_graph.Callback callbacks = 3;
   total_size += 1UL * this->_internal_callbacks_size();
   for (const auto& msg : this->_impl_.callbacks_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
-  // repeated .ros_graph.Subscription subscriptions = 5;
+  // repeated .ros_graph.Subscription subscriptions = 4;
   total_size += 1UL * this->_internal_subscriptions_size();
   for (const auto& msg : this->_impl_.subscriptions_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  // repeated .ros_graph.CallbackGroup callback_groups = 5;
+  total_size += 1UL * this->_internal_callback_groups_size();
+  for (const auto& msg : this->_impl_.callback_groups_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
@@ -1533,61 +1776,332 @@ size_t ROSGraph::ByteSizeLong() const {
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ROSGraph::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Node::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    ROSGraph::MergeImpl
+    Node::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ROSGraph::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Node::GetClassData() const { return &_class_data_; }
 
 
-void ROSGraph::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<ROSGraph*>(&to_msg);
-  auto& from = static_cast<const ROSGraph&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:ros_graph.ROSGraph)
+void Node::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<Node*>(&to_msg);
+  auto& from = static_cast<const Node&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:ros_graph.Node)
   GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  _this->_impl_.topics_.MergeFrom(from._impl_.topics_);
   _this->_impl_.timers_.MergeFrom(from._impl_.timers_);
   _this->_impl_.callbacks_.MergeFrom(from._impl_.callbacks_);
   _this->_impl_.subscriptions_.MergeFrom(from._impl_.subscriptions_);
+  _this->_impl_.callback_groups_.MergeFrom(from._impl_.callback_groups_);
   if (!from._internal_name().empty()) {
     _this->_internal_set_name(from._internal_name());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void ROSGraph::CopyFrom(const ROSGraph& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:ros_graph.ROSGraph)
+void Node::CopyFrom(const Node& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:ros_graph.Node)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool ROSGraph::IsInitialized() const {
+bool Node::IsInitialized() const {
   return true;
 }
 
-void ROSGraph::InternalSwap(ROSGraph* other) {
+void Node::InternalSwap(Node* other) {
   using std::swap;
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  _impl_.topics_.InternalSwap(&other->_impl_.topics_);
   _impl_.timers_.InternalSwap(&other->_impl_.timers_);
   _impl_.callbacks_.InternalSwap(&other->_impl_.callbacks_);
   _impl_.subscriptions_.InternalSwap(&other->_impl_.subscriptions_);
+  _impl_.callback_groups_.InternalSwap(&other->_impl_.callback_groups_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &_impl_.name_, lhs_arena,
       &other->_impl_.name_, rhs_arena
   );
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata ROSGraph::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata Node::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_graph_2eproto_getter, &descriptor_table_graph_2eproto_once,
-      file_level_metadata_graph_2eproto[4]);
+      file_level_metadata_graph_2eproto[5]);
+}
+
+// ===================================================================
+
+class Graph::_Internal {
+ public:
+};
+
+Graph::Graph(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:ros_graph.Graph)
+}
+Graph::Graph(const Graph& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  Graph* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.nodes_){from._impl_.nodes_}
+    , decltype(_impl_.topics_){from._impl_.topics_}
+    , decltype(_impl_.name_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_name().empty()) {
+    _this->_impl_.name_.Set(from._internal_name(), 
+      _this->GetArenaForAllocation());
+  }
+  // @@protoc_insertion_point(copy_constructor:ros_graph.Graph)
+}
+
+inline void Graph::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.nodes_){arena}
+    , decltype(_impl_.topics_){arena}
+    , decltype(_impl_.name_){}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+Graph::~Graph() {
+  // @@protoc_insertion_point(destructor:ros_graph.Graph)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void Graph::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.nodes_.~RepeatedPtrField();
+  _impl_.topics_.~RepeatedPtrField();
+  _impl_.name_.Destroy();
+}
+
+void Graph::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void Graph::Clear() {
+// @@protoc_insertion_point(message_clear_start:ros_graph.Graph)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.nodes_.Clear();
+  _impl_.topics_.Clear();
+  _impl_.name_.ClearToEmpty();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Graph::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // string name = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          auto str = _internal_mutable_name();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "ros_graph.Graph.name"));
+        } else
+          goto handle_unusual;
+        continue;
+      // repeated .ros_graph.Node nodes = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_nodes(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
+        } else
+          goto handle_unusual;
+        continue;
+      // repeated .ros_graph.Topic topics = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_topics(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* Graph::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:ros_graph.Graph)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string name = 1;
+  if (!this->_internal_name().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_name().data(), static_cast<int>(this->_internal_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "ros_graph.Graph.name");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_name(), target);
+  }
+
+  // repeated .ros_graph.Node nodes = 2;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_nodes_size()); i < n; i++) {
+    const auto& repfield = this->_internal_nodes(i);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+        InternalWriteMessage(2, repfield, repfield.GetCachedSize(), target, stream);
+  }
+
+  // repeated .ros_graph.Topic topics = 3;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_topics_size()); i < n; i++) {
+    const auto& repfield = this->_internal_topics(i);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+        InternalWriteMessage(3, repfield, repfield.GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:ros_graph.Graph)
+  return target;
+}
+
+size_t Graph::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:ros_graph.Graph)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated .ros_graph.Node nodes = 2;
+  total_size += 1UL * this->_internal_nodes_size();
+  for (const auto& msg : this->_impl_.nodes_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  // repeated .ros_graph.Topic topics = 3;
+  total_size += 1UL * this->_internal_topics_size();
+  for (const auto& msg : this->_impl_.topics_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  // string name = 1;
+  if (!this->_internal_name().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_name());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Graph::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    Graph::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Graph::GetClassData() const { return &_class_data_; }
+
+
+void Graph::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<Graph*>(&to_msg);
+  auto& from = static_cast<const Graph&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:ros_graph.Graph)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  _this->_impl_.nodes_.MergeFrom(from._impl_.nodes_);
+  _this->_impl_.topics_.MergeFrom(from._impl_.topics_);
+  if (!from._internal_name().empty()) {
+    _this->_internal_set_name(from._internal_name());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void Graph::CopyFrom(const Graph& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:ros_graph.Graph)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Graph::IsInitialized() const {
+  return true;
+}
+
+void Graph::InternalSwap(Graph* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.nodes_.InternalSwap(&other->_impl_.nodes_);
+  _impl_.topics_.InternalSwap(&other->_impl_.topics_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.name_, lhs_arena,
+      &other->_impl_.name_, rhs_arena
+  );
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata Graph::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_graph_2eproto_getter, &descriptor_table_graph_2eproto_once,
+      file_level_metadata_graph_2eproto[6]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -1597,21 +2111,29 @@ template<> PROTOBUF_NOINLINE ::ros_graph::Topic*
 Arena::CreateMaybeMessage< ::ros_graph::Topic >(Arena* arena) {
   return Arena::CreateMessageInternal< ::ros_graph::Topic >(arena);
 }
-template<> PROTOBUF_NOINLINE ::ros_graph::Timer*
-Arena::CreateMaybeMessage< ::ros_graph::Timer >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::ros_graph::Timer >(arena);
-}
 template<> PROTOBUF_NOINLINE ::ros_graph::Callback*
 Arena::CreateMaybeMessage< ::ros_graph::Callback >(Arena* arena) {
   return Arena::CreateMessageInternal< ::ros_graph::Callback >(arena);
+}
+template<> PROTOBUF_NOINLINE ::ros_graph::Timer*
+Arena::CreateMaybeMessage< ::ros_graph::Timer >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::ros_graph::Timer >(arena);
 }
 template<> PROTOBUF_NOINLINE ::ros_graph::Subscription*
 Arena::CreateMaybeMessage< ::ros_graph::Subscription >(Arena* arena) {
   return Arena::CreateMessageInternal< ::ros_graph::Subscription >(arena);
 }
-template<> PROTOBUF_NOINLINE ::ros_graph::ROSGraph*
-Arena::CreateMaybeMessage< ::ros_graph::ROSGraph >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::ros_graph::ROSGraph >(arena);
+template<> PROTOBUF_NOINLINE ::ros_graph::CallbackGroup*
+Arena::CreateMaybeMessage< ::ros_graph::CallbackGroup >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::ros_graph::CallbackGroup >(arena);
+}
+template<> PROTOBUF_NOINLINE ::ros_graph::Node*
+Arena::CreateMaybeMessage< ::ros_graph::Node >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::ros_graph::Node >(arena);
+}
+template<> PROTOBUF_NOINLINE ::ros_graph::Graph*
+Arena::CreateMaybeMessage< ::ros_graph::Graph >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::ros_graph::Graph >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

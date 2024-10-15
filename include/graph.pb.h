@@ -48,9 +48,15 @@ namespace ros_graph {
 class Callback;
 struct CallbackDefaultTypeInternal;
 extern CallbackDefaultTypeInternal _Callback_default_instance_;
-class ROSGraph;
-struct ROSGraphDefaultTypeInternal;
-extern ROSGraphDefaultTypeInternal _ROSGraph_default_instance_;
+class CallbackGroup;
+struct CallbackGroupDefaultTypeInternal;
+extern CallbackGroupDefaultTypeInternal _CallbackGroup_default_instance_;
+class Graph;
+struct GraphDefaultTypeInternal;
+extern GraphDefaultTypeInternal _Graph_default_instance_;
+class Node;
+struct NodeDefaultTypeInternal;
+extern NodeDefaultTypeInternal _Node_default_instance_;
 class Subscription;
 struct SubscriptionDefaultTypeInternal;
 extern SubscriptionDefaultTypeInternal _Subscription_default_instance_;
@@ -63,7 +69,9 @@ extern TopicDefaultTypeInternal _Topic_default_instance_;
 }  // namespace ros_graph
 PROTOBUF_NAMESPACE_OPEN
 template<> ::ros_graph::Callback* Arena::CreateMaybeMessage<::ros_graph::Callback>(Arena*);
-template<> ::ros_graph::ROSGraph* Arena::CreateMaybeMessage<::ros_graph::ROSGraph>(Arena*);
+template<> ::ros_graph::CallbackGroup* Arena::CreateMaybeMessage<::ros_graph::CallbackGroup>(Arena*);
+template<> ::ros_graph::Graph* Arena::CreateMaybeMessage<::ros_graph::Graph>(Arena*);
+template<> ::ros_graph::Node* Arena::CreateMaybeMessage<::ros_graph::Node>(Arena*);
 template<> ::ros_graph::Subscription* Arena::CreateMaybeMessage<::ros_graph::Subscription>(Arena*);
 template<> ::ros_graph::Timer* Arena::CreateMaybeMessage<::ros_graph::Timer>(Arena*);
 template<> ::ros_graph::Topic* Arena::CreateMaybeMessage<::ros_graph::Topic>(Arena*);
@@ -194,6 +202,7 @@ class Topic final :
 
   enum : int {
     kNameFieldNumber = 1,
+    kMsgSizeBytesFieldNumber = 2,
   };
   // string name = 1;
   void clear_name();
@@ -207,6 +216,15 @@ class Topic final :
   const std::string& _internal_name() const;
   inline PROTOBUF_ALWAYS_INLINE void _internal_set_name(const std::string& value);
   std::string* _internal_mutable_name();
+  public:
+
+  // uint32 msg_size_bytes = 2;
+  void clear_msg_size_bytes();
+  uint32_t msg_size_bytes() const;
+  void set_msg_size_bytes(uint32_t value);
+  private:
+  uint32_t _internal_msg_size_bytes() const;
+  void _internal_set_msg_size_bytes(uint32_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:ros_graph.Topic)
@@ -218,207 +236,7 @@ class Topic final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_graph_2eproto;
-};
-// -------------------------------------------------------------------
-
-class Timer final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ros_graph.Timer) */ {
- public:
-  inline Timer() : Timer(nullptr) {}
-  ~Timer() override;
-  explicit PROTOBUF_CONSTEXPR Timer(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  Timer(const Timer& from);
-  Timer(Timer&& from) noexcept
-    : Timer() {
-    *this = ::std::move(from);
-  }
-
-  inline Timer& operator=(const Timer& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline Timer& operator=(Timer&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const Timer& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const Timer* internal_default_instance() {
-    return reinterpret_cast<const Timer*>(
-               &_Timer_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    1;
-
-  friend void swap(Timer& a, Timer& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(Timer* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(Timer* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  Timer* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<Timer>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const Timer& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const Timer& from) {
-    Timer::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(Timer* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "ros_graph.Timer";
-  }
-  protected:
-  explicit Timer(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kPublishesToFieldNumber = 4,
-    kNameFieldNumber = 1,
-    kFrequencyHzFieldNumber = 2,
-    kExecTimeUsFieldNumber = 3,
-  };
-  // repeated string publishes_to = 4;
-  int publishes_to_size() const;
-  private:
-  int _internal_publishes_to_size() const;
-  public:
-  void clear_publishes_to();
-  const std::string& publishes_to(int index) const;
-  std::string* mutable_publishes_to(int index);
-  void set_publishes_to(int index, const std::string& value);
-  void set_publishes_to(int index, std::string&& value);
-  void set_publishes_to(int index, const char* value);
-  void set_publishes_to(int index, const char* value, size_t size);
-  std::string* add_publishes_to();
-  void add_publishes_to(const std::string& value);
-  void add_publishes_to(std::string&& value);
-  void add_publishes_to(const char* value);
-  void add_publishes_to(const char* value, size_t size);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& publishes_to() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_publishes_to();
-  private:
-  const std::string& _internal_publishes_to(int index) const;
-  std::string* _internal_add_publishes_to();
-  public:
-
-  // string name = 1;
-  void clear_name();
-  const std::string& name() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_name(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_name();
-  PROTOBUF_NODISCARD std::string* release_name();
-  void set_allocated_name(std::string* name);
-  private:
-  const std::string& _internal_name() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_name(const std::string& value);
-  std::string* _internal_mutable_name();
-  public:
-
-  // uint32 frequency_hz = 2;
-  void clear_frequency_hz();
-  uint32_t frequency_hz() const;
-  void set_frequency_hz(uint32_t value);
-  private:
-  uint32_t _internal_frequency_hz() const;
-  void _internal_set_frequency_hz(uint32_t value);
-  public:
-
-  // uint32 exec_time_us = 3;
-  void clear_exec_time_us();
-  uint32_t exec_time_us() const;
-  void set_exec_time_us(uint32_t value);
-  private:
-  uint32_t _internal_exec_time_us() const;
-  void _internal_set_exec_time_us(uint32_t value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:ros_graph.Timer)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> publishes_to_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
-    uint32_t frequency_hz_;
-    uint32_t exec_time_us_;
+    uint32_t msg_size_bytes_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -474,7 +292,7 @@ class Callback final :
                &_Callback_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    1;
 
   friend void swap(Callback& a, Callback& b) {
     a.Swap(&b);
@@ -609,6 +427,174 @@ class Callback final :
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> publishes_to_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
     uint32_t exec_time_us_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_graph_2eproto;
+};
+// -------------------------------------------------------------------
+
+class Timer final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ros_graph.Timer) */ {
+ public:
+  inline Timer() : Timer(nullptr) {}
+  ~Timer() override;
+  explicit PROTOBUF_CONSTEXPR Timer(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Timer(const Timer& from);
+  Timer(Timer&& from) noexcept
+    : Timer() {
+    *this = ::std::move(from);
+  }
+
+  inline Timer& operator=(const Timer& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Timer& operator=(Timer&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Timer& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Timer* internal_default_instance() {
+    return reinterpret_cast<const Timer*>(
+               &_Timer_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(Timer& a, Timer& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Timer* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Timer* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Timer* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Timer>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Timer& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const Timer& from) {
+    Timer::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Timer* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "ros_graph.Timer";
+  }
+  protected:
+  explicit Timer(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kCallbackFieldNumber = 2,
+    kFrequencyHzFieldNumber = 1,
+  };
+  // .ros_graph.Callback callback = 2;
+  bool has_callback() const;
+  private:
+  bool _internal_has_callback() const;
+  public:
+  void clear_callback();
+  const ::ros_graph::Callback& callback() const;
+  PROTOBUF_NODISCARD ::ros_graph::Callback* release_callback();
+  ::ros_graph::Callback* mutable_callback();
+  void set_allocated_callback(::ros_graph::Callback* callback);
+  private:
+  const ::ros_graph::Callback& _internal_callback() const;
+  ::ros_graph::Callback* _internal_mutable_callback();
+  public:
+  void unsafe_arena_set_allocated_callback(
+      ::ros_graph::Callback* callback);
+  ::ros_graph::Callback* unsafe_arena_release_callback();
+
+  // uint32 frequency_hz = 1;
+  void clear_frequency_hz();
+  uint32_t frequency_hz() const;
+  void set_frequency_hz(uint32_t value);
+  private:
+  uint32_t _internal_frequency_hz() const;
+  void _internal_set_frequency_hz(uint32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:ros_graph.Timer)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::ros_graph::Callback* callback_;
+    uint32_t frequency_hz_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -796,24 +782,24 @@ class Subscription final :
 };
 // -------------------------------------------------------------------
 
-class ROSGraph final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ros_graph.ROSGraph) */ {
+class CallbackGroup final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ros_graph.CallbackGroup) */ {
  public:
-  inline ROSGraph() : ROSGraph(nullptr) {}
-  ~ROSGraph() override;
-  explicit PROTOBUF_CONSTEXPR ROSGraph(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline CallbackGroup() : CallbackGroup(nullptr) {}
+  ~CallbackGroup() override;
+  explicit PROTOBUF_CONSTEXPR CallbackGroup(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  ROSGraph(const ROSGraph& from);
-  ROSGraph(ROSGraph&& from) noexcept
-    : ROSGraph() {
+  CallbackGroup(const CallbackGroup& from);
+  CallbackGroup(CallbackGroup&& from) noexcept
+    : CallbackGroup() {
     *this = ::std::move(from);
   }
 
-  inline ROSGraph& operator=(const ROSGraph& from) {
+  inline CallbackGroup& operator=(const CallbackGroup& from) {
     CopyFrom(from);
     return *this;
   }
-  inline ROSGraph& operator=(ROSGraph&& from) noexcept {
+  inline CallbackGroup& operator=(CallbackGroup&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -836,20 +822,20 @@ class ROSGraph final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const ROSGraph& default_instance() {
+  static const CallbackGroup& default_instance() {
     return *internal_default_instance();
   }
-  static inline const ROSGraph* internal_default_instance() {
-    return reinterpret_cast<const ROSGraph*>(
-               &_ROSGraph_default_instance_);
+  static inline const CallbackGroup* internal_default_instance() {
+    return reinterpret_cast<const CallbackGroup*>(
+               &_CallbackGroup_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     4;
 
-  friend void swap(ROSGraph& a, ROSGraph& b) {
+  friend void swap(CallbackGroup& a, CallbackGroup& b) {
     a.Swap(&b);
   }
-  inline void Swap(ROSGraph* other) {
+  inline void Swap(CallbackGroup* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -862,7 +848,7 @@ class ROSGraph final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(ROSGraph* other) {
+  void UnsafeArenaSwap(CallbackGroup* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -870,14 +856,14 @@ class ROSGraph final :
 
   // implements Message ----------------------------------------------
 
-  ROSGraph* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<ROSGraph>(arena);
+  CallbackGroup* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<CallbackGroup>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const ROSGraph& from);
+  void CopyFrom(const CallbackGroup& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const ROSGraph& from) {
-    ROSGraph::MergeImpl(*this, from);
+  void MergeFrom( const CallbackGroup& from) {
+    CallbackGroup::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -895,15 +881,15 @@ class ROSGraph final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(ROSGraph* other);
+  void InternalSwap(CallbackGroup* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "ros_graph.ROSGraph";
+    return "ros_graph.CallbackGroup";
   }
   protected:
-  explicit ROSGraph(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit CallbackGroup(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -917,31 +903,192 @@ class ROSGraph final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kTopicsFieldNumber = 2,
-    kTimersFieldNumber = 3,
-    kCallbacksFieldNumber = 4,
-    kSubscriptionsFieldNumber = 5,
+    kMembersFieldNumber = 2,
     kNameFieldNumber = 1,
   };
-  // repeated .ros_graph.Topic topics = 2;
-  int topics_size() const;
+  // repeated string members = 2;
+  int members_size() const;
   private:
-  int _internal_topics_size() const;
+  int _internal_members_size() const;
   public:
-  void clear_topics();
-  ::ros_graph::Topic* mutable_topics(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Topic >*
-      mutable_topics();
+  void clear_members();
+  const std::string& members(int index) const;
+  std::string* mutable_members(int index);
+  void set_members(int index, const std::string& value);
+  void set_members(int index, std::string&& value);
+  void set_members(int index, const char* value);
+  void set_members(int index, const char* value, size_t size);
+  std::string* add_members();
+  void add_members(const std::string& value);
+  void add_members(std::string&& value);
+  void add_members(const char* value);
+  void add_members(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& members() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_members();
   private:
-  const ::ros_graph::Topic& _internal_topics(int index) const;
-  ::ros_graph::Topic* _internal_add_topics();
+  const std::string& _internal_members(int index) const;
+  std::string* _internal_add_members();
   public:
-  const ::ros_graph::Topic& topics(int index) const;
-  ::ros_graph::Topic* add_topics();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Topic >&
-      topics() const;
 
-  // repeated .ros_graph.Timer timers = 3;
+  // string name = 1;
+  void clear_name();
+  const std::string& name() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_name(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_name();
+  PROTOBUF_NODISCARD std::string* release_name();
+  void set_allocated_name(std::string* name);
+  private:
+  const std::string& _internal_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_name(const std::string& value);
+  std::string* _internal_mutable_name();
+  public:
+
+  // @@protoc_insertion_point(class_scope:ros_graph.CallbackGroup)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> members_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_graph_2eproto;
+};
+// -------------------------------------------------------------------
+
+class Node final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ros_graph.Node) */ {
+ public:
+  inline Node() : Node(nullptr) {}
+  ~Node() override;
+  explicit PROTOBUF_CONSTEXPR Node(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Node(const Node& from);
+  Node(Node&& from) noexcept
+    : Node() {
+    *this = ::std::move(from);
+  }
+
+  inline Node& operator=(const Node& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Node& operator=(Node&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Node& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Node* internal_default_instance() {
+    return reinterpret_cast<const Node*>(
+               &_Node_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  friend void swap(Node& a, Node& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Node* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Node* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Node* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Node>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Node& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const Node& from) {
+    Node::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Node* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "ros_graph.Node";
+  }
+  protected:
+  explicit Node(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kTimersFieldNumber = 2,
+    kCallbacksFieldNumber = 3,
+    kSubscriptionsFieldNumber = 4,
+    kCallbackGroupsFieldNumber = 5,
+    kNameFieldNumber = 1,
+  };
+  // repeated .ros_graph.Timer timers = 2;
   int timers_size() const;
   private:
   int _internal_timers_size() const;
@@ -959,7 +1106,7 @@ class ROSGraph final :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Timer >&
       timers() const;
 
-  // repeated .ros_graph.Callback callbacks = 4;
+  // repeated .ros_graph.Callback callbacks = 3;
   int callbacks_size() const;
   private:
   int _internal_callbacks_size() const;
@@ -977,7 +1124,7 @@ class ROSGraph final :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Callback >&
       callbacks() const;
 
-  // repeated .ros_graph.Subscription subscriptions = 5;
+  // repeated .ros_graph.Subscription subscriptions = 4;
   int subscriptions_size() const;
   private:
   int _internal_subscriptions_size() const;
@@ -995,6 +1142,24 @@ class ROSGraph final :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Subscription >&
       subscriptions() const;
 
+  // repeated .ros_graph.CallbackGroup callback_groups = 5;
+  int callback_groups_size() const;
+  private:
+  int _internal_callback_groups_size() const;
+  public:
+  void clear_callback_groups();
+  ::ros_graph::CallbackGroup* mutable_callback_groups(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::CallbackGroup >*
+      mutable_callback_groups();
+  private:
+  const ::ros_graph::CallbackGroup& _internal_callback_groups(int index) const;
+  ::ros_graph::CallbackGroup* _internal_add_callback_groups();
+  public:
+  const ::ros_graph::CallbackGroup& callback_groups(int index) const;
+  ::ros_graph::CallbackGroup* add_callback_groups();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::CallbackGroup >&
+      callback_groups() const;
+
   // string name = 1;
   void clear_name();
   const std::string& name() const;
@@ -1009,7 +1174,7 @@ class ROSGraph final :
   std::string* _internal_mutable_name();
   public:
 
-  // @@protoc_insertion_point(class_scope:ros_graph.ROSGraph)
+  // @@protoc_insertion_point(class_scope:ros_graph.Node)
  private:
   class _Internal;
 
@@ -1017,10 +1182,203 @@ class ROSGraph final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Topic > topics_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Timer > timers_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Callback > callbacks_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Subscription > subscriptions_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::CallbackGroup > callback_groups_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_graph_2eproto;
+};
+// -------------------------------------------------------------------
+
+class Graph final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ros_graph.Graph) */ {
+ public:
+  inline Graph() : Graph(nullptr) {}
+  ~Graph() override;
+  explicit PROTOBUF_CONSTEXPR Graph(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Graph(const Graph& from);
+  Graph(Graph&& from) noexcept
+    : Graph() {
+    *this = ::std::move(from);
+  }
+
+  inline Graph& operator=(const Graph& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Graph& operator=(Graph&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Graph& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Graph* internal_default_instance() {
+    return reinterpret_cast<const Graph*>(
+               &_Graph_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  friend void swap(Graph& a, Graph& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Graph* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Graph* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Graph* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Graph>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Graph& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const Graph& from) {
+    Graph::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Graph* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "ros_graph.Graph";
+  }
+  protected:
+  explicit Graph(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kNodesFieldNumber = 2,
+    kTopicsFieldNumber = 3,
+    kNameFieldNumber = 1,
+  };
+  // repeated .ros_graph.Node nodes = 2;
+  int nodes_size() const;
+  private:
+  int _internal_nodes_size() const;
+  public:
+  void clear_nodes();
+  ::ros_graph::Node* mutable_nodes(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Node >*
+      mutable_nodes();
+  private:
+  const ::ros_graph::Node& _internal_nodes(int index) const;
+  ::ros_graph::Node* _internal_add_nodes();
+  public:
+  const ::ros_graph::Node& nodes(int index) const;
+  ::ros_graph::Node* add_nodes();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Node >&
+      nodes() const;
+
+  // repeated .ros_graph.Topic topics = 3;
+  int topics_size() const;
+  private:
+  int _internal_topics_size() const;
+  public:
+  void clear_topics();
+  ::ros_graph::Topic* mutable_topics(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Topic >*
+      mutable_topics();
+  private:
+  const ::ros_graph::Topic& _internal_topics(int index) const;
+  ::ros_graph::Topic* _internal_add_topics();
+  public:
+  const ::ros_graph::Topic& topics(int index) const;
+  ::ros_graph::Topic* add_topics();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Topic >&
+      topics() const;
+
+  // string name = 1;
+  void clear_name();
+  const std::string& name() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_name(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_name();
+  PROTOBUF_NODISCARD std::string* release_name();
+  void set_allocated_name(std::string* name);
+  private:
+  const std::string& _internal_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_name(const std::string& value);
+  std::string* _internal_mutable_name();
+  public:
+
+  // @@protoc_insertion_point(class_scope:ros_graph.Graph)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Node > nodes_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Topic > topics_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -1088,173 +1446,24 @@ inline void Topic::set_allocated_name(std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:ros_graph.Topic.name)
 }
 
-// -------------------------------------------------------------------
-
-// Timer
-
-// string name = 1;
-inline void Timer::clear_name() {
-  _impl_.name_.ClearToEmpty();
+// uint32 msg_size_bytes = 2;
+inline void Topic::clear_msg_size_bytes() {
+  _impl_.msg_size_bytes_ = 0u;
 }
-inline const std::string& Timer::name() const {
-  // @@protoc_insertion_point(field_get:ros_graph.Timer.name)
-  return _internal_name();
+inline uint32_t Topic::_internal_msg_size_bytes() const {
+  return _impl_.msg_size_bytes_;
 }
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void Timer::set_name(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:ros_graph.Timer.name)
+inline uint32_t Topic::msg_size_bytes() const {
+  // @@protoc_insertion_point(field_get:ros_graph.Topic.msg_size_bytes)
+  return _internal_msg_size_bytes();
 }
-inline std::string* Timer::mutable_name() {
-  std::string* _s = _internal_mutable_name();
-  // @@protoc_insertion_point(field_mutable:ros_graph.Timer.name)
-  return _s;
-}
-inline const std::string& Timer::_internal_name() const {
-  return _impl_.name_.Get();
-}
-inline void Timer::_internal_set_name(const std::string& value) {
+inline void Topic::_internal_set_msg_size_bytes(uint32_t value) {
   
-  _impl_.name_.Set(value, GetArenaForAllocation());
+  _impl_.msg_size_bytes_ = value;
 }
-inline std::string* Timer::_internal_mutable_name() {
-  
-  return _impl_.name_.Mutable(GetArenaForAllocation());
-}
-inline std::string* Timer::release_name() {
-  // @@protoc_insertion_point(field_release:ros_graph.Timer.name)
-  return _impl_.name_.Release();
-}
-inline void Timer::set_allocated_name(std::string* name) {
-  if (name != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.name_.SetAllocated(name, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.name_.IsDefault()) {
-    _impl_.name_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:ros_graph.Timer.name)
-}
-
-// uint32 frequency_hz = 2;
-inline void Timer::clear_frequency_hz() {
-  _impl_.frequency_hz_ = 0u;
-}
-inline uint32_t Timer::_internal_frequency_hz() const {
-  return _impl_.frequency_hz_;
-}
-inline uint32_t Timer::frequency_hz() const {
-  // @@protoc_insertion_point(field_get:ros_graph.Timer.frequency_hz)
-  return _internal_frequency_hz();
-}
-inline void Timer::_internal_set_frequency_hz(uint32_t value) {
-  
-  _impl_.frequency_hz_ = value;
-}
-inline void Timer::set_frequency_hz(uint32_t value) {
-  _internal_set_frequency_hz(value);
-  // @@protoc_insertion_point(field_set:ros_graph.Timer.frequency_hz)
-}
-
-// uint32 exec_time_us = 3;
-inline void Timer::clear_exec_time_us() {
-  _impl_.exec_time_us_ = 0u;
-}
-inline uint32_t Timer::_internal_exec_time_us() const {
-  return _impl_.exec_time_us_;
-}
-inline uint32_t Timer::exec_time_us() const {
-  // @@protoc_insertion_point(field_get:ros_graph.Timer.exec_time_us)
-  return _internal_exec_time_us();
-}
-inline void Timer::_internal_set_exec_time_us(uint32_t value) {
-  
-  _impl_.exec_time_us_ = value;
-}
-inline void Timer::set_exec_time_us(uint32_t value) {
-  _internal_set_exec_time_us(value);
-  // @@protoc_insertion_point(field_set:ros_graph.Timer.exec_time_us)
-}
-
-// repeated string publishes_to = 4;
-inline int Timer::_internal_publishes_to_size() const {
-  return _impl_.publishes_to_.size();
-}
-inline int Timer::publishes_to_size() const {
-  return _internal_publishes_to_size();
-}
-inline void Timer::clear_publishes_to() {
-  _impl_.publishes_to_.Clear();
-}
-inline std::string* Timer::add_publishes_to() {
-  std::string* _s = _internal_add_publishes_to();
-  // @@protoc_insertion_point(field_add_mutable:ros_graph.Timer.publishes_to)
-  return _s;
-}
-inline const std::string& Timer::_internal_publishes_to(int index) const {
-  return _impl_.publishes_to_.Get(index);
-}
-inline const std::string& Timer::publishes_to(int index) const {
-  // @@protoc_insertion_point(field_get:ros_graph.Timer.publishes_to)
-  return _internal_publishes_to(index);
-}
-inline std::string* Timer::mutable_publishes_to(int index) {
-  // @@protoc_insertion_point(field_mutable:ros_graph.Timer.publishes_to)
-  return _impl_.publishes_to_.Mutable(index);
-}
-inline void Timer::set_publishes_to(int index, const std::string& value) {
-  _impl_.publishes_to_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set:ros_graph.Timer.publishes_to)
-}
-inline void Timer::set_publishes_to(int index, std::string&& value) {
-  _impl_.publishes_to_.Mutable(index)->assign(std::move(value));
-  // @@protoc_insertion_point(field_set:ros_graph.Timer.publishes_to)
-}
-inline void Timer::set_publishes_to(int index, const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  _impl_.publishes_to_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:ros_graph.Timer.publishes_to)
-}
-inline void Timer::set_publishes_to(int index, const char* value, size_t size) {
-  _impl_.publishes_to_.Mutable(index)->assign(
-    reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:ros_graph.Timer.publishes_to)
-}
-inline std::string* Timer::_internal_add_publishes_to() {
-  return _impl_.publishes_to_.Add();
-}
-inline void Timer::add_publishes_to(const std::string& value) {
-  _impl_.publishes_to_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:ros_graph.Timer.publishes_to)
-}
-inline void Timer::add_publishes_to(std::string&& value) {
-  _impl_.publishes_to_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:ros_graph.Timer.publishes_to)
-}
-inline void Timer::add_publishes_to(const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  _impl_.publishes_to_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:ros_graph.Timer.publishes_to)
-}
-inline void Timer::add_publishes_to(const char* value, size_t size) {
-  _impl_.publishes_to_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:ros_graph.Timer.publishes_to)
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
-Timer::publishes_to() const {
-  // @@protoc_insertion_point(field_list:ros_graph.Timer.publishes_to)
-  return _impl_.publishes_to_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
-Timer::mutable_publishes_to() {
-  // @@protoc_insertion_point(field_mutable_list:ros_graph.Timer.publishes_to)
-  return &_impl_.publishes_to_;
+inline void Topic::set_msg_size_bytes(uint32_t value) {
+  _internal_set_msg_size_bytes(value);
+  // @@protoc_insertion_point(field_set:ros_graph.Topic.msg_size_bytes)
 }
 
 // -------------------------------------------------------------------
@@ -1408,6 +1617,120 @@ Callback::mutable_publishes_to() {
 
 // -------------------------------------------------------------------
 
+// Timer
+
+// uint32 frequency_hz = 1;
+inline void Timer::clear_frequency_hz() {
+  _impl_.frequency_hz_ = 0u;
+}
+inline uint32_t Timer::_internal_frequency_hz() const {
+  return _impl_.frequency_hz_;
+}
+inline uint32_t Timer::frequency_hz() const {
+  // @@protoc_insertion_point(field_get:ros_graph.Timer.frequency_hz)
+  return _internal_frequency_hz();
+}
+inline void Timer::_internal_set_frequency_hz(uint32_t value) {
+  
+  _impl_.frequency_hz_ = value;
+}
+inline void Timer::set_frequency_hz(uint32_t value) {
+  _internal_set_frequency_hz(value);
+  // @@protoc_insertion_point(field_set:ros_graph.Timer.frequency_hz)
+}
+
+// .ros_graph.Callback callback = 2;
+inline bool Timer::_internal_has_callback() const {
+  return this != internal_default_instance() && _impl_.callback_ != nullptr;
+}
+inline bool Timer::has_callback() const {
+  return _internal_has_callback();
+}
+inline void Timer::clear_callback() {
+  if (GetArenaForAllocation() == nullptr && _impl_.callback_ != nullptr) {
+    delete _impl_.callback_;
+  }
+  _impl_.callback_ = nullptr;
+}
+inline const ::ros_graph::Callback& Timer::_internal_callback() const {
+  const ::ros_graph::Callback* p = _impl_.callback_;
+  return p != nullptr ? *p : reinterpret_cast<const ::ros_graph::Callback&>(
+      ::ros_graph::_Callback_default_instance_);
+}
+inline const ::ros_graph::Callback& Timer::callback() const {
+  // @@protoc_insertion_point(field_get:ros_graph.Timer.callback)
+  return _internal_callback();
+}
+inline void Timer::unsafe_arena_set_allocated_callback(
+    ::ros_graph::Callback* callback) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.callback_);
+  }
+  _impl_.callback_ = callback;
+  if (callback) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ros_graph.Timer.callback)
+}
+inline ::ros_graph::Callback* Timer::release_callback() {
+  
+  ::ros_graph::Callback* temp = _impl_.callback_;
+  _impl_.callback_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::ros_graph::Callback* Timer::unsafe_arena_release_callback() {
+  // @@protoc_insertion_point(field_release:ros_graph.Timer.callback)
+  
+  ::ros_graph::Callback* temp = _impl_.callback_;
+  _impl_.callback_ = nullptr;
+  return temp;
+}
+inline ::ros_graph::Callback* Timer::_internal_mutable_callback() {
+  
+  if (_impl_.callback_ == nullptr) {
+    auto* p = CreateMaybeMessage<::ros_graph::Callback>(GetArenaForAllocation());
+    _impl_.callback_ = p;
+  }
+  return _impl_.callback_;
+}
+inline ::ros_graph::Callback* Timer::mutable_callback() {
+  ::ros_graph::Callback* _msg = _internal_mutable_callback();
+  // @@protoc_insertion_point(field_mutable:ros_graph.Timer.callback)
+  return _msg;
+}
+inline void Timer::set_allocated_callback(::ros_graph::Callback* callback) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.callback_;
+  }
+  if (callback) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(callback);
+    if (message_arena != submessage_arena) {
+      callback = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, callback, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.callback_ = callback;
+  // @@protoc_insertion_point(field_set_allocated:ros_graph.Timer.callback)
+}
+
+// -------------------------------------------------------------------
+
 // Subscription
 
 // string callback = 1;
@@ -1532,44 +1855,44 @@ inline void Subscription::set_latency_us(uint32_t value) {
 
 // -------------------------------------------------------------------
 
-// ROSGraph
+// CallbackGroup
 
 // string name = 1;
-inline void ROSGraph::clear_name() {
+inline void CallbackGroup::clear_name() {
   _impl_.name_.ClearToEmpty();
 }
-inline const std::string& ROSGraph::name() const {
-  // @@protoc_insertion_point(field_get:ros_graph.ROSGraph.name)
+inline const std::string& CallbackGroup::name() const {
+  // @@protoc_insertion_point(field_get:ros_graph.CallbackGroup.name)
   return _internal_name();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void ROSGraph::set_name(ArgT0&& arg0, ArgT... args) {
+void CallbackGroup::set_name(ArgT0&& arg0, ArgT... args) {
  
  _impl_.name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:ros_graph.ROSGraph.name)
+  // @@protoc_insertion_point(field_set:ros_graph.CallbackGroup.name)
 }
-inline std::string* ROSGraph::mutable_name() {
+inline std::string* CallbackGroup::mutable_name() {
   std::string* _s = _internal_mutable_name();
-  // @@protoc_insertion_point(field_mutable:ros_graph.ROSGraph.name)
+  // @@protoc_insertion_point(field_mutable:ros_graph.CallbackGroup.name)
   return _s;
 }
-inline const std::string& ROSGraph::_internal_name() const {
+inline const std::string& CallbackGroup::_internal_name() const {
   return _impl_.name_.Get();
 }
-inline void ROSGraph::_internal_set_name(const std::string& value) {
+inline void CallbackGroup::_internal_set_name(const std::string& value) {
   
   _impl_.name_.Set(value, GetArenaForAllocation());
 }
-inline std::string* ROSGraph::_internal_mutable_name() {
+inline std::string* CallbackGroup::_internal_mutable_name() {
   
   return _impl_.name_.Mutable(GetArenaForAllocation());
 }
-inline std::string* ROSGraph::release_name() {
-  // @@protoc_insertion_point(field_release:ros_graph.ROSGraph.name)
+inline std::string* CallbackGroup::release_name() {
+  // @@protoc_insertion_point(field_release:ros_graph.CallbackGroup.name)
   return _impl_.name_.Release();
 }
-inline void ROSGraph::set_allocated_name(std::string* name) {
+inline void CallbackGroup::set_allocated_name(std::string* name) {
   if (name != nullptr) {
     
   } else {
@@ -1581,172 +1904,439 @@ inline void ROSGraph::set_allocated_name(std::string* name) {
     _impl_.name_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:ros_graph.ROSGraph.name)
+  // @@protoc_insertion_point(field_set_allocated:ros_graph.CallbackGroup.name)
 }
 
-// repeated .ros_graph.Topic topics = 2;
-inline int ROSGraph::_internal_topics_size() const {
-  return _impl_.topics_.size();
+// repeated string members = 2;
+inline int CallbackGroup::_internal_members_size() const {
+  return _impl_.members_.size();
 }
-inline int ROSGraph::topics_size() const {
-  return _internal_topics_size();
+inline int CallbackGroup::members_size() const {
+  return _internal_members_size();
 }
-inline void ROSGraph::clear_topics() {
-  _impl_.topics_.Clear();
+inline void CallbackGroup::clear_members() {
+  _impl_.members_.Clear();
 }
-inline ::ros_graph::Topic* ROSGraph::mutable_topics(int index) {
-  // @@protoc_insertion_point(field_mutable:ros_graph.ROSGraph.topics)
-  return _impl_.topics_.Mutable(index);
+inline std::string* CallbackGroup::add_members() {
+  std::string* _s = _internal_add_members();
+  // @@protoc_insertion_point(field_add_mutable:ros_graph.CallbackGroup.members)
+  return _s;
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Topic >*
-ROSGraph::mutable_topics() {
-  // @@protoc_insertion_point(field_mutable_list:ros_graph.ROSGraph.topics)
-  return &_impl_.topics_;
+inline const std::string& CallbackGroup::_internal_members(int index) const {
+  return _impl_.members_.Get(index);
 }
-inline const ::ros_graph::Topic& ROSGraph::_internal_topics(int index) const {
-  return _impl_.topics_.Get(index);
+inline const std::string& CallbackGroup::members(int index) const {
+  // @@protoc_insertion_point(field_get:ros_graph.CallbackGroup.members)
+  return _internal_members(index);
 }
-inline const ::ros_graph::Topic& ROSGraph::topics(int index) const {
-  // @@protoc_insertion_point(field_get:ros_graph.ROSGraph.topics)
-  return _internal_topics(index);
+inline std::string* CallbackGroup::mutable_members(int index) {
+  // @@protoc_insertion_point(field_mutable:ros_graph.CallbackGroup.members)
+  return _impl_.members_.Mutable(index);
 }
-inline ::ros_graph::Topic* ROSGraph::_internal_add_topics() {
-  return _impl_.topics_.Add();
+inline void CallbackGroup::set_members(int index, const std::string& value) {
+  _impl_.members_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:ros_graph.CallbackGroup.members)
 }
-inline ::ros_graph::Topic* ROSGraph::add_topics() {
-  ::ros_graph::Topic* _add = _internal_add_topics();
-  // @@protoc_insertion_point(field_add:ros_graph.ROSGraph.topics)
-  return _add;
+inline void CallbackGroup::set_members(int index, std::string&& value) {
+  _impl_.members_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:ros_graph.CallbackGroup.members)
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Topic >&
-ROSGraph::topics() const {
-  // @@protoc_insertion_point(field_list:ros_graph.ROSGraph.topics)
-  return _impl_.topics_;
+inline void CallbackGroup::set_members(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.members_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:ros_graph.CallbackGroup.members)
+}
+inline void CallbackGroup::set_members(int index, const char* value, size_t size) {
+  _impl_.members_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:ros_graph.CallbackGroup.members)
+}
+inline std::string* CallbackGroup::_internal_add_members() {
+  return _impl_.members_.Add();
+}
+inline void CallbackGroup::add_members(const std::string& value) {
+  _impl_.members_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:ros_graph.CallbackGroup.members)
+}
+inline void CallbackGroup::add_members(std::string&& value) {
+  _impl_.members_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:ros_graph.CallbackGroup.members)
+}
+inline void CallbackGroup::add_members(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.members_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:ros_graph.CallbackGroup.members)
+}
+inline void CallbackGroup::add_members(const char* value, size_t size) {
+  _impl_.members_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:ros_graph.CallbackGroup.members)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+CallbackGroup::members() const {
+  // @@protoc_insertion_point(field_list:ros_graph.CallbackGroup.members)
+  return _impl_.members_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+CallbackGroup::mutable_members() {
+  // @@protoc_insertion_point(field_mutable_list:ros_graph.CallbackGroup.members)
+  return &_impl_.members_;
 }
 
-// repeated .ros_graph.Timer timers = 3;
-inline int ROSGraph::_internal_timers_size() const {
+// -------------------------------------------------------------------
+
+// Node
+
+// string name = 1;
+inline void Node::clear_name() {
+  _impl_.name_.ClearToEmpty();
+}
+inline const std::string& Node::name() const {
+  // @@protoc_insertion_point(field_get:ros_graph.Node.name)
+  return _internal_name();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Node::set_name(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ros_graph.Node.name)
+}
+inline std::string* Node::mutable_name() {
+  std::string* _s = _internal_mutable_name();
+  // @@protoc_insertion_point(field_mutable:ros_graph.Node.name)
+  return _s;
+}
+inline const std::string& Node::_internal_name() const {
+  return _impl_.name_.Get();
+}
+inline void Node::_internal_set_name(const std::string& value) {
+  
+  _impl_.name_.Set(value, GetArenaForAllocation());
+}
+inline std::string* Node::_internal_mutable_name() {
+  
+  return _impl_.name_.Mutable(GetArenaForAllocation());
+}
+inline std::string* Node::release_name() {
+  // @@protoc_insertion_point(field_release:ros_graph.Node.name)
+  return _impl_.name_.Release();
+}
+inline void Node::set_allocated_name(std::string* name) {
+  if (name != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.name_.SetAllocated(name, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.name_.IsDefault()) {
+    _impl_.name_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:ros_graph.Node.name)
+}
+
+// repeated .ros_graph.Timer timers = 2;
+inline int Node::_internal_timers_size() const {
   return _impl_.timers_.size();
 }
-inline int ROSGraph::timers_size() const {
+inline int Node::timers_size() const {
   return _internal_timers_size();
 }
-inline void ROSGraph::clear_timers() {
+inline void Node::clear_timers() {
   _impl_.timers_.Clear();
 }
-inline ::ros_graph::Timer* ROSGraph::mutable_timers(int index) {
-  // @@protoc_insertion_point(field_mutable:ros_graph.ROSGraph.timers)
+inline ::ros_graph::Timer* Node::mutable_timers(int index) {
+  // @@protoc_insertion_point(field_mutable:ros_graph.Node.timers)
   return _impl_.timers_.Mutable(index);
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Timer >*
-ROSGraph::mutable_timers() {
-  // @@protoc_insertion_point(field_mutable_list:ros_graph.ROSGraph.timers)
+Node::mutable_timers() {
+  // @@protoc_insertion_point(field_mutable_list:ros_graph.Node.timers)
   return &_impl_.timers_;
 }
-inline const ::ros_graph::Timer& ROSGraph::_internal_timers(int index) const {
+inline const ::ros_graph::Timer& Node::_internal_timers(int index) const {
   return _impl_.timers_.Get(index);
 }
-inline const ::ros_graph::Timer& ROSGraph::timers(int index) const {
-  // @@protoc_insertion_point(field_get:ros_graph.ROSGraph.timers)
+inline const ::ros_graph::Timer& Node::timers(int index) const {
+  // @@protoc_insertion_point(field_get:ros_graph.Node.timers)
   return _internal_timers(index);
 }
-inline ::ros_graph::Timer* ROSGraph::_internal_add_timers() {
+inline ::ros_graph::Timer* Node::_internal_add_timers() {
   return _impl_.timers_.Add();
 }
-inline ::ros_graph::Timer* ROSGraph::add_timers() {
+inline ::ros_graph::Timer* Node::add_timers() {
   ::ros_graph::Timer* _add = _internal_add_timers();
-  // @@protoc_insertion_point(field_add:ros_graph.ROSGraph.timers)
+  // @@protoc_insertion_point(field_add:ros_graph.Node.timers)
   return _add;
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Timer >&
-ROSGraph::timers() const {
-  // @@protoc_insertion_point(field_list:ros_graph.ROSGraph.timers)
+Node::timers() const {
+  // @@protoc_insertion_point(field_list:ros_graph.Node.timers)
   return _impl_.timers_;
 }
 
-// repeated .ros_graph.Callback callbacks = 4;
-inline int ROSGraph::_internal_callbacks_size() const {
+// repeated .ros_graph.Callback callbacks = 3;
+inline int Node::_internal_callbacks_size() const {
   return _impl_.callbacks_.size();
 }
-inline int ROSGraph::callbacks_size() const {
+inline int Node::callbacks_size() const {
   return _internal_callbacks_size();
 }
-inline void ROSGraph::clear_callbacks() {
+inline void Node::clear_callbacks() {
   _impl_.callbacks_.Clear();
 }
-inline ::ros_graph::Callback* ROSGraph::mutable_callbacks(int index) {
-  // @@protoc_insertion_point(field_mutable:ros_graph.ROSGraph.callbacks)
+inline ::ros_graph::Callback* Node::mutable_callbacks(int index) {
+  // @@protoc_insertion_point(field_mutable:ros_graph.Node.callbacks)
   return _impl_.callbacks_.Mutable(index);
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Callback >*
-ROSGraph::mutable_callbacks() {
-  // @@protoc_insertion_point(field_mutable_list:ros_graph.ROSGraph.callbacks)
+Node::mutable_callbacks() {
+  // @@protoc_insertion_point(field_mutable_list:ros_graph.Node.callbacks)
   return &_impl_.callbacks_;
 }
-inline const ::ros_graph::Callback& ROSGraph::_internal_callbacks(int index) const {
+inline const ::ros_graph::Callback& Node::_internal_callbacks(int index) const {
   return _impl_.callbacks_.Get(index);
 }
-inline const ::ros_graph::Callback& ROSGraph::callbacks(int index) const {
-  // @@protoc_insertion_point(field_get:ros_graph.ROSGraph.callbacks)
+inline const ::ros_graph::Callback& Node::callbacks(int index) const {
+  // @@protoc_insertion_point(field_get:ros_graph.Node.callbacks)
   return _internal_callbacks(index);
 }
-inline ::ros_graph::Callback* ROSGraph::_internal_add_callbacks() {
+inline ::ros_graph::Callback* Node::_internal_add_callbacks() {
   return _impl_.callbacks_.Add();
 }
-inline ::ros_graph::Callback* ROSGraph::add_callbacks() {
+inline ::ros_graph::Callback* Node::add_callbacks() {
   ::ros_graph::Callback* _add = _internal_add_callbacks();
-  // @@protoc_insertion_point(field_add:ros_graph.ROSGraph.callbacks)
+  // @@protoc_insertion_point(field_add:ros_graph.Node.callbacks)
   return _add;
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Callback >&
-ROSGraph::callbacks() const {
-  // @@protoc_insertion_point(field_list:ros_graph.ROSGraph.callbacks)
+Node::callbacks() const {
+  // @@protoc_insertion_point(field_list:ros_graph.Node.callbacks)
   return _impl_.callbacks_;
 }
 
-// repeated .ros_graph.Subscription subscriptions = 5;
-inline int ROSGraph::_internal_subscriptions_size() const {
+// repeated .ros_graph.Subscription subscriptions = 4;
+inline int Node::_internal_subscriptions_size() const {
   return _impl_.subscriptions_.size();
 }
-inline int ROSGraph::subscriptions_size() const {
+inline int Node::subscriptions_size() const {
   return _internal_subscriptions_size();
 }
-inline void ROSGraph::clear_subscriptions() {
+inline void Node::clear_subscriptions() {
   _impl_.subscriptions_.Clear();
 }
-inline ::ros_graph::Subscription* ROSGraph::mutable_subscriptions(int index) {
-  // @@protoc_insertion_point(field_mutable:ros_graph.ROSGraph.subscriptions)
+inline ::ros_graph::Subscription* Node::mutable_subscriptions(int index) {
+  // @@protoc_insertion_point(field_mutable:ros_graph.Node.subscriptions)
   return _impl_.subscriptions_.Mutable(index);
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Subscription >*
-ROSGraph::mutable_subscriptions() {
-  // @@protoc_insertion_point(field_mutable_list:ros_graph.ROSGraph.subscriptions)
+Node::mutable_subscriptions() {
+  // @@protoc_insertion_point(field_mutable_list:ros_graph.Node.subscriptions)
   return &_impl_.subscriptions_;
 }
-inline const ::ros_graph::Subscription& ROSGraph::_internal_subscriptions(int index) const {
+inline const ::ros_graph::Subscription& Node::_internal_subscriptions(int index) const {
   return _impl_.subscriptions_.Get(index);
 }
-inline const ::ros_graph::Subscription& ROSGraph::subscriptions(int index) const {
-  // @@protoc_insertion_point(field_get:ros_graph.ROSGraph.subscriptions)
+inline const ::ros_graph::Subscription& Node::subscriptions(int index) const {
+  // @@protoc_insertion_point(field_get:ros_graph.Node.subscriptions)
   return _internal_subscriptions(index);
 }
-inline ::ros_graph::Subscription* ROSGraph::_internal_add_subscriptions() {
+inline ::ros_graph::Subscription* Node::_internal_add_subscriptions() {
   return _impl_.subscriptions_.Add();
 }
-inline ::ros_graph::Subscription* ROSGraph::add_subscriptions() {
+inline ::ros_graph::Subscription* Node::add_subscriptions() {
   ::ros_graph::Subscription* _add = _internal_add_subscriptions();
-  // @@protoc_insertion_point(field_add:ros_graph.ROSGraph.subscriptions)
+  // @@protoc_insertion_point(field_add:ros_graph.Node.subscriptions)
   return _add;
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Subscription >&
-ROSGraph::subscriptions() const {
-  // @@protoc_insertion_point(field_list:ros_graph.ROSGraph.subscriptions)
+Node::subscriptions() const {
+  // @@protoc_insertion_point(field_list:ros_graph.Node.subscriptions)
   return _impl_.subscriptions_;
+}
+
+// repeated .ros_graph.CallbackGroup callback_groups = 5;
+inline int Node::_internal_callback_groups_size() const {
+  return _impl_.callback_groups_.size();
+}
+inline int Node::callback_groups_size() const {
+  return _internal_callback_groups_size();
+}
+inline void Node::clear_callback_groups() {
+  _impl_.callback_groups_.Clear();
+}
+inline ::ros_graph::CallbackGroup* Node::mutable_callback_groups(int index) {
+  // @@protoc_insertion_point(field_mutable:ros_graph.Node.callback_groups)
+  return _impl_.callback_groups_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::CallbackGroup >*
+Node::mutable_callback_groups() {
+  // @@protoc_insertion_point(field_mutable_list:ros_graph.Node.callback_groups)
+  return &_impl_.callback_groups_;
+}
+inline const ::ros_graph::CallbackGroup& Node::_internal_callback_groups(int index) const {
+  return _impl_.callback_groups_.Get(index);
+}
+inline const ::ros_graph::CallbackGroup& Node::callback_groups(int index) const {
+  // @@protoc_insertion_point(field_get:ros_graph.Node.callback_groups)
+  return _internal_callback_groups(index);
+}
+inline ::ros_graph::CallbackGroup* Node::_internal_add_callback_groups() {
+  return _impl_.callback_groups_.Add();
+}
+inline ::ros_graph::CallbackGroup* Node::add_callback_groups() {
+  ::ros_graph::CallbackGroup* _add = _internal_add_callback_groups();
+  // @@protoc_insertion_point(field_add:ros_graph.Node.callback_groups)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::CallbackGroup >&
+Node::callback_groups() const {
+  // @@protoc_insertion_point(field_list:ros_graph.Node.callback_groups)
+  return _impl_.callback_groups_;
+}
+
+// -------------------------------------------------------------------
+
+// Graph
+
+// string name = 1;
+inline void Graph::clear_name() {
+  _impl_.name_.ClearToEmpty();
+}
+inline const std::string& Graph::name() const {
+  // @@protoc_insertion_point(field_get:ros_graph.Graph.name)
+  return _internal_name();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Graph::set_name(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ros_graph.Graph.name)
+}
+inline std::string* Graph::mutable_name() {
+  std::string* _s = _internal_mutable_name();
+  // @@protoc_insertion_point(field_mutable:ros_graph.Graph.name)
+  return _s;
+}
+inline const std::string& Graph::_internal_name() const {
+  return _impl_.name_.Get();
+}
+inline void Graph::_internal_set_name(const std::string& value) {
+  
+  _impl_.name_.Set(value, GetArenaForAllocation());
+}
+inline std::string* Graph::_internal_mutable_name() {
+  
+  return _impl_.name_.Mutable(GetArenaForAllocation());
+}
+inline std::string* Graph::release_name() {
+  // @@protoc_insertion_point(field_release:ros_graph.Graph.name)
+  return _impl_.name_.Release();
+}
+inline void Graph::set_allocated_name(std::string* name) {
+  if (name != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.name_.SetAllocated(name, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.name_.IsDefault()) {
+    _impl_.name_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:ros_graph.Graph.name)
+}
+
+// repeated .ros_graph.Node nodes = 2;
+inline int Graph::_internal_nodes_size() const {
+  return _impl_.nodes_.size();
+}
+inline int Graph::nodes_size() const {
+  return _internal_nodes_size();
+}
+inline void Graph::clear_nodes() {
+  _impl_.nodes_.Clear();
+}
+inline ::ros_graph::Node* Graph::mutable_nodes(int index) {
+  // @@protoc_insertion_point(field_mutable:ros_graph.Graph.nodes)
+  return _impl_.nodes_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Node >*
+Graph::mutable_nodes() {
+  // @@protoc_insertion_point(field_mutable_list:ros_graph.Graph.nodes)
+  return &_impl_.nodes_;
+}
+inline const ::ros_graph::Node& Graph::_internal_nodes(int index) const {
+  return _impl_.nodes_.Get(index);
+}
+inline const ::ros_graph::Node& Graph::nodes(int index) const {
+  // @@protoc_insertion_point(field_get:ros_graph.Graph.nodes)
+  return _internal_nodes(index);
+}
+inline ::ros_graph::Node* Graph::_internal_add_nodes() {
+  return _impl_.nodes_.Add();
+}
+inline ::ros_graph::Node* Graph::add_nodes() {
+  ::ros_graph::Node* _add = _internal_add_nodes();
+  // @@protoc_insertion_point(field_add:ros_graph.Graph.nodes)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Node >&
+Graph::nodes() const {
+  // @@protoc_insertion_point(field_list:ros_graph.Graph.nodes)
+  return _impl_.nodes_;
+}
+
+// repeated .ros_graph.Topic topics = 3;
+inline int Graph::_internal_topics_size() const {
+  return _impl_.topics_.size();
+}
+inline int Graph::topics_size() const {
+  return _internal_topics_size();
+}
+inline void Graph::clear_topics() {
+  _impl_.topics_.Clear();
+}
+inline ::ros_graph::Topic* Graph::mutable_topics(int index) {
+  // @@protoc_insertion_point(field_mutable:ros_graph.Graph.topics)
+  return _impl_.topics_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Topic >*
+Graph::mutable_topics() {
+  // @@protoc_insertion_point(field_mutable_list:ros_graph.Graph.topics)
+  return &_impl_.topics_;
+}
+inline const ::ros_graph::Topic& Graph::_internal_topics(int index) const {
+  return _impl_.topics_.Get(index);
+}
+inline const ::ros_graph::Topic& Graph::topics(int index) const {
+  // @@protoc_insertion_point(field_get:ros_graph.Graph.topics)
+  return _internal_topics(index);
+}
+inline ::ros_graph::Topic* Graph::_internal_add_topics() {
+  return _impl_.topics_.Add();
+}
+inline ::ros_graph::Topic* Graph::add_topics() {
+  ::ros_graph::Topic* _add = _internal_add_topics();
+  // @@protoc_insertion_point(field_add:ros_graph.Graph.topics)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::ros_graph::Topic >&
+Graph::topics() const {
+  // @@protoc_insertion_point(field_list:ros_graph.Graph.topics)
+  return _impl_.topics_;
 }
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
