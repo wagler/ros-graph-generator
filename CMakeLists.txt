@@ -13,6 +13,15 @@ find_package(Protobuf REQUIRED)
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(LTTngUST REQUIRED)
+
+if(LTTngUST_FOUND)
+    # Do something if LTTng-UST is found
+    message(STATUS "LTTng-UST found")
+else()
+    # Do something else if LTTng-UST is not found
+    message(STATUS "LTTng-UST not found")
+endif()
 
 # Add the include directory
 # Include directories
@@ -27,15 +36,19 @@ include_directories(
 
 # Get the source files
 file(GLOB_RECURSE SOURCE_FILES
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp" 
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc" 
-
+  "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp" 
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc"
 )
 message(${SOURCE_FILES})
 
+message(${CMAKE_CXX_FLAGS})
+
+add_library(unc-ros-graph-generator-tpp STATIC "${CMAKE_CURRENT_SOURCE_DIR}/src/unc_ros_graph_generator_tpp.c")
+target_link_libraries(unc-ros-graph-generator-tpp LTTng::UST)
+
 add_executable(ros_graph_generator ${SOURCE_FILES})
 ament_target_dependencies(ros_graph_generator rclcpp std_msgs Protobuf)
-#target_link_libraries(ros_graph_generator ${Protobuf_LIBRARIES})
+target_link_libraries(ros_graph_generator unc-ros-graph-generator-tpp LTTng::UST)
 
 install(TARGETS
   ros_graph_generator

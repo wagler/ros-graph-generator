@@ -1,0 +1,141 @@
+name: "double_chain"
+
+topics: [
+	{
+		name: "/sample/first"
+		msg_size_bytes: 512
+	},
+	{
+		name: "/sample/second/a"
+		msg_size_bytes: 512
+	},
+	{
+		name: "/sample/second/b"
+		msg_size_bytes: 512
+	},
+	{
+		name: "/sample/third/a"
+		msg_size_bytes: 512
+	},
+	{
+		name: "/sample/third/b"
+		msg_size_bytes: 512
+	}
+]
+
+nodes: [
+	{
+		name: "leader_node"
+
+		timers: [
+			{
+				frequency_hz: 30	
+				callback: {
+					name: "source"
+					exec_time_us: 0
+					publishes_to: [ 
+						"/sample/first" 
+					]
+				}
+			}
+		]
+
+		callbacks: []
+		subscriptions: []
+		callback_groups: []
+	},
+
+	{
+		name: "follower_node_1"
+
+		timers: []
+		callbacks: [
+			{
+				name: "N1_CB_1"
+				exec_time_us: 300
+				publishes_to: [
+					"/sample/second/a"
+				]
+			},
+			{
+				name: "N1_CB_2"
+				exec_time_us: 300
+				publishes_to: [
+					"/sample/third/a"
+				]
+			},
+			{
+				name: "N1_CB_3"
+				exec_time_us: 300
+				publishes_to: []
+			}
+		]
+
+		subscriptions: [
+			{
+				callback: "N1_CB_1"
+				topic: "/sample/first"
+				latency_us: 0
+			},
+			{
+				callback: "N1_CB_2"
+				topic: "/sample/second/a"
+				latency_us: 0
+			},
+			{
+				callback: "N1_CB_3"
+				topic: "/sample/third/a"
+				latency_us: 0
+			}
+		]
+
+		callback_groups: []
+	},
+
+	{
+		name: "follower_node_2"
+
+		timers: []
+		callbacks: [
+			{
+				name: "N2_CB_1"
+				exec_time_us: 300
+				publishes_to: [
+					"/sample/second/b"
+				]
+			},
+			{
+				name: "N2_CB_2"
+				exec_time_us: 300
+				publishes_to: [
+					"/sample/third/b"
+				]
+			},
+			{
+				name: "N2_CB_3"
+				exec_time_us: 300
+				publishes_to: []
+			}
+		]
+		
+		subscriptions: [
+			{
+				callback: "N2_CB_1"
+				topic: "/sample/first"
+				latency_us: 0
+			},
+			{
+				callback: "N2_CB_2"
+				topic: "/sample/second/b"
+				latency_us: 0
+			},
+			{
+				callback: "N2_CB_3"
+				topic: "/sample/third/b"
+				latency_us: 0
+			}
+		]
+
+		callback_groups: []
+	}
+]

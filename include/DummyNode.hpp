@@ -43,9 +43,10 @@ private:
     {
         std::vector<std::string> publishesTo;
         uint32_t execTimeUs;
+        uint32_t invocationCount;
     };
 
-    void execCallback(const std::string name, const Callback cb);
+    void execCallback(const std::string name, Callback& cb);
 
     // Should be a 1:1 copy of the topics map in Graph
     std::unordered_map<std::string, uint32_t> topics;

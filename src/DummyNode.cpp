@@ -21,6 +21,9 @@
 // Local Includes
 #include "DummyNode.hpp"
 
+#define LTTNG_UST_TRACEPOINT_DEFINE
+#include "unc_ros_graph_generator_tpp.h"
+
 using namespace std::chrono_literals;
 
 DummyNode::DummyNode(const ros_graph::Node &node, const std::unordered_map<std::string, uint32_t> &topics)
@@ -85,6 +88,7 @@ int DummyNode::setupCallbackHelper(const ros_graph::Callback &cb)
     DummyNode::Callback tempCB;
 
     tempCB.execTimeUs = cb.exec_time_us();
+    tempCB.invocationCount = 0;
 
     for (const auto &topic : cb.publishes_to())
     {
@@ -178,9 +182,13 @@ int DummyNode::setupSubscriptions()
     for (const auto &subscription : node.subscriptions())
     {
         bool error = false;
-        if (publishers.find(subscription.topic()) == publishers.end())
+        if (topics.find(subscription.topic()) == topics.end())
         {
             RCLCPP_ERROR(this->get_logger(), "Error: subscription (%s, %s) references a non-existant topic %s", subscription.topic().c_str(), subscription.callback().c_str(), subscription.topic().c_str());
+            RCLCPP_ERROR(this->get_logger(), "Available topics are:");
+            for (const auto& pair : topics) {
+                std::cout << pair.first << std::endl; 
+            }
             numErrors++;
             error = true;
         }
@@ -188,6 +196,10 @@ int DummyNode::setupSubscriptions()
         if (callbacks.find(subscription.callback()) == callbacks.end())
         {
             RCLCPP_ERROR(this->get_logger(), "Error: subscription (%s, %s) references a non-existant callback %s", subscription.topic().c_str(), subscription.callback().c_str(), subscription.callback().c_str());
+            RCLCPP_ERROR(this->get_logger(), "Available callbacks are:");
+            for (const auto& pair : callbacks) {
+                std::cout << pair.first << std::endl; 
+            }
             numErrors++;
             error = true;
         }
@@ -224,6 +236,7 @@ int DummyNode::setupSubscriptions()
                 options);
 
         subscriptions.push_back(newSub);
+        lttng_ust_tracepoint(unc_ros_graph_generator, subscribe, callbackName.c_str(), topic.c_str());
     }
 
     if (numErrors > 0)
@@ -233,15 +246,17 @@ int DummyNode::setupSubscriptions()
     return numErrors;
 }
 
-void DummyNode::execCallback(const std::string name, const DummyNode::Callback cb)
+void DummyNode::execCallback(const std::string name, DummyNode::Callback& cb)
 {
     const auto start = std::chrono::high_resolution_clock::now();
     const auto end = start + std::chrono::microseconds(cb.execTimeUs);
 
     // Busy-wait loop
+    lttng_ust_tracepoint(unc_ros_graph_generator, callback_begin, name.c_str(), cb.invocationCount);
     while (std::chrono::high_resolution_clock::now() < end)
     {
     }
+    lttng_ust_tracepoint(unc_ros_graph_generator, callback_end, name.c_str(), cb.invocationCount);
 
     for (const auto &topic : cb.publishesTo)
     {
@@ -253,5 +268,8 @@ void DummyNode::execCallback(const std::string name, const DummyNode::Callback c
                     name.c_str(), message.data.c_str(), topic.c_str());
 
         publishers.at(topic)->publish(message);
+        lttng_ust_tracepoint(unc_ros_graph_generator, publish, name.c_str(), topic.c_str(), cb.invocationCount);
     }
+
+    cb.invocationCount++;
 }
