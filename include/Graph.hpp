@@ -16,18 +16,24 @@
 
 #include "DummyNode.hpp"
 
+#include <memory>
+
 using namespace std::chrono_literals;
 
 class Graph
 {
 public:
-    explicit Graph(const std::string &graphFilePath);
+    explicit Graph(const std::string &graphFilePath, bool singleThreadedExecutor=true, int numThreads=1);
     Graph() = delete;
     Graph(const Graph &) = delete;
     Graph(const Graph &&) = delete;
     Graph &operator=(const Graph &) = delete;
     Graph &operator=(Graph &&) = delete;
 
+	~Graph()
+	{
+		delete executor;
+	}
     // Creates the map of topics -> message size
     int setupTopics();
 
@@ -39,5 +45,5 @@ private:
     std::vector<DummyNode::SharedPtr> nodes;
     std::unordered_map<std::string, uint32_t> topics;
     ros_graph::Graph graph;
-    rclcpp::executors::SingleThreadedExecutor executor;
+    rclcpp::Executor* executor;
 };

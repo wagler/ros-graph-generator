@@ -24,7 +24,7 @@
 
 using namespace std::chrono_literals;
 
-Graph::Graph(const std::string &graphFilePath)
+Graph::Graph(const std::string &graphFilePath, bool singleThreadedExecutor, int numThreads)
 {
     // Validates the input graph file is well formed, and fills in the member structures
     // that keep track of the topics, timers, callbacks, and subscriptions
@@ -69,11 +69,26 @@ Graph::Graph(const std::string &graphFilePath)
 
     printGraphStats();
 
+	if (singleThreadedExecutor)
+	{
+		executor = new rclcpp::executors::SingleThreadedExecutor();
+		std::cout << "Using singlethreaded executor" << std::endl;
+	}
+	else
+	{
+		const rclcpp::ExecutorOptions & options = rclcpp::ExecutorOptions();
+		std::chrono::nanoseconds timeout = std::chrono::nanoseconds(-1);
+
+		executor = new rclcpp::executors::MultiThreadedExecutor(options, numThreads, false, timeout);
+		size_t numThreads = dynamic_cast<rclcpp::executors::MultiThreadedExecutor*>(executor)->get_number_of_threads();
+		std::cout << "Using multithreaded executor with " << numThreads << " threads" << std::endl;
+	}
+
     for (const auto &node : nodes)
     {
-        executor.add_node(node);
+        executor->add_node(node);
     }
-    executor.spin();
+    executor->spin();
 }
 
 int Graph::setupTopics()
@@ -103,101 +118,6 @@ int Graph::setupTopics()
 
     return numErrors;
 }
-
-/*
-static inline printTopic(std::stringstream &ss, const ros_graph::Topic &topic)
-{
-    uint32_t count = 1;
-    for (const auto &topic : graph.topics())
-    {
-        std::cout << "\t" << count << ") " << topic.name() << "\n";
-        std::cout << "\t\tSize (B)" << topic.msg_size_bytes() << "\n";
-        count++;
-    }
-}
-
-static inline printNode(const ros_graph::Node &node)
-{
-}
-
-static inline printTimer(const ros_graph::Timer &timer)
-{
-}
-
-static inline printCallback(const ros_graph::Callback &callback)
-{
-}
-
-static inline printSubscription(const ros_graph::Subscription &subscription)
-{
-}
-
-static inline printCallbackGroup(const ros_graph::CallbackGroup &callbackGroup)
-{
-}
-
-void Graph::printGraphStats() const
-{
-    std::cout << "Graph Name: " << graph.name() << "\n";
-
-    std::cout << "Topics:\n";
-    uint32_t count = 1;
-    for (const auto &topic : graph.topics())
-    {
-        std::cout << "\t" << count << ") " << topic.name() << "\n";
-        std::cout << "\t\tSize (B)" << topic.msg_size_bytes() << "\n";
-        count++;
-    }
-
-    std::cout << "Nodes:\n";
-    uint32_t count = 1;
-    for (const auto &node : graph.nodes())
-    {
-        std::cout << "\t" << count << ") " << node.name() << "\n";
-        std::cout << "\t\tSize (B)" << topic.msg_size_bytes() << "\n";
-        count++;
-    }
-
-    count = 1;
-    std::cout << "Timers: \n";
-    for (const auto &timer : graph.timers())
-    {
-        std::cout << "\t" << count << ") " << timer.name() << "\n";
-        std::cout << "\t\tFrequency (Hz): " << timer.frequency_hz() << "\n";
-        std::cout << "\t\tExecution Time (us): " << timer.exec_time_us() << " us\n";
-        std::cout << "\t\tPublishes to topics:\n";
-        std::string roman = "i";
-        for (const auto &topic : timer.publishes_to())
-        {
-            std::cout << "\t\t\t" << roman << ") " << topic << "\n";
-            roman.append("i");
-        }
-    }
-
-    count = 1;
-    std::cout << "Callbacks:\n";
-    for (const auto &callback : graph.callbacks())
-    {
-        std::cout << "\t" << count << ") " << callback.name() << "\n";
-        std::cout << "\t\tExecution Time (us): " << callback.exec_time_us() << " us\n";
-        std::cout << "\t\tPublishes to topics:\n";
-        std::string roman = "i";
-        for (const auto &topic : callback.publishes_to())
-        {
-            std::cout << "\t\t\t" << roman << ") " << topic << "\n";
-            roman.append("i");
-        }
-    }
-
-    count = 1;
-    std::cout << "Subscriptions: \n";
-    for (const auto &sub : graph.subscriptions())
-    {
-        std::cout << "\t" << count << ") " << sub.topic()
-                  << " --- " << sub.latency_us() << " us ---> " << sub.callback() << "\n";
-    }
-}
-*/
 
 void Graph::printGraphStats() const
 {
